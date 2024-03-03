@@ -1,18 +1,15 @@
-import mysql from 'mysql2/promise';
+import createDatabaseConnection from '../../config/db.config.js'
 
-// Create the connection to database
-const connection = await mysql.createConnection({
-	host: 'localhost',
-	// port: 3306,
-	// password: '01234567',
-	user: 'root',
-	database: 'pool_messages',
-});
+const connection = await createDatabaseConnection()
 
-class MessageModel {
-	async getAll() {
-		try {
-			const result = await connection.query('SELECT * FROM messages;');
-		} catch (error) {}
+export class MessageModel {
+  async getAllMessages() {
+    try {
+      const [result] = await connection.query('SELECT * FROM messages;');
+      return result;
+    } catch (error) {
+      console.log('mi error', error);
+      return error.message
+    }
 	}
 }
