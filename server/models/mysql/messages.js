@@ -14,7 +14,6 @@ export class MessageModel {
 			const [result] = await connection.query('SELECT * FROM messages;');
 			return result;
 		} catch (error) {
-			console.log('mi error', error);
 			return error.message
 		}
 	}

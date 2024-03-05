@@ -8,6 +8,5 @@ export const getAll = async (_req, res) => {
 		res.json(result)
 	} catch (error) {
 		console.log("controlador ",error);
-		// res.json('gjh')
 	}
 }

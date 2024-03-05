@@ -9,7 +9,7 @@ const createDatabaseConnection = async () => {
 			user: process.env.USER_DB,
 			database: process.env.NAME_DB,
 		});
-    throw 'hola';
+    // throw new Error ('hola');
 		console.log('connected to the database')
     // return connection
 
