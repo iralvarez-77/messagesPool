@@ -1,4 +1,5 @@
 import express from 'express';
+
 import messageRoutes from './routes/message.routes.js';
 
 const app = express();
@@ -11,6 +12,7 @@ app.use('/api/v1/messages', messageRoutes);
 app.listen(PORT, () => {
   console.log(`server is running on ${PORT}`);
 });
+
 
 
 

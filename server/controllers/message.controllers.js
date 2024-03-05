@@ -7,7 +7,7 @@ export const getAll = async (_req, res) => {
 		const result = await message.getAllMessages()
 		res.json(result)
 	} catch (error) {
-		console.log(error);
-		res.json(error)
+		console.log("controlador ",error);
+		// res.json('gjh')
 	}
-};
+}
