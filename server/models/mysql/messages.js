@@ -1,27 +1,56 @@
 import databaseConnection from '../../config/db.config.js';
-let connection
+
+let connection;
 
 export class MessageModel {
 	async getAllMessages() {
 		try {
+
 			connection = databaseConnection.getConnection();
 			const [result] = await connection.query('SELECT * FROM messages;');
-			return result;
+			console.log('👀 👉🏽 ~  result:', result);
+
+			return {
+				data: result,
+				statusCode: 200,
+			};
+
 		} catch (error) {
-			return error.message;
-		} finally {
-      await databaseConnection.closeConnection()
+			console.log('👀 👉🏽 ~  error:', error.message);
+
+			return {
+				data: 'Internal Server Error',
+				statusCode: 500,
+			};
 		}
 	}
-	async getMessageByID() {
+
+	async getMessageByID(messageId) {
 		try {
-			// await databaseConnection.createConnection();
-			// const connection = databaseConnection.getConnection();
-			// const connection = await createDatabaseConnection();
-			const [result] = await connection.query('SELECT * FROM messages;');
-			return result;
+			connection = databaseConnection.getConnection();
+			const [result] = await connection.query(
+				'SELECT * FROM messages WHERE messageId = ?;',
+				[messageId]
+			);
+
+      if ( result.length === 0 )
+        return {
+          data:'Resourse not found',
+          statusCode: 404
+        }
+
+      return {
+				data: result[0],
+				statusCode: 200,
+			};
+
 		} catch (error) {
-			return error.message;
+			console.log('👀 👉🏽 ~  error:', error.message);
+
+      return {
+				data: 'Internal Server Error',
+				statusCode: 500,
+			};
 		}
 	}
 }

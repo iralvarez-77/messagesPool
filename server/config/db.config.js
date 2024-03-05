@@ -4,10 +4,10 @@ import mysql from 'mysql2/promise';
 class DatabaseConnection {
 	constructor() {
 		this.connection = null;
-		this._createConnection()
+		this._createConnection() //encapsulando la lógica de conexión
 	}
-
-	async _createConnection() {
+	//_método privado
+	async  _createConnection() {
 		try {
 			this.connection = await mysql.createConnection({
 				host: process.env.HOST_DB,

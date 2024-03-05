@@ -1,8 +1,9 @@
 import { Router } from 'express';
-import { getAll } from '../controllers/message.controllers.js';
+import { getAllMessages, getMessageById } from '../controllers/message.controllers.js';
 
 const router = Router();
 
-router.get('/', getAll);
+router.get('/', getAllMessages);
+router.get('/:messageId', getMessageById);
 
 export default router;
