@@ -36,12 +36,13 @@ class DatabaseConnection {
     if (this.connection) {
       await this.connection.end();
       console.log('Connection closed');
+		
     }	
 	}
 }
 
 const databaseConnection = new DatabaseConnection();
-export default databaseConnection;
+export default databaseConnection 
 
 
 

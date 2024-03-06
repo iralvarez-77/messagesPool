@@ -1,14 +1,23 @@
-import { MessageModel } from '../models/mysql/messages.js'
-
-const message = new MessageModel()
+import { MessageModel } from '../models/mysql/messages.js';
 
 export const getAllMessages = async (_req, res) => {
-	const {data, statusCode} = await message.getAllMessages()
-	res.status(statusCode).json(data)
-}
+	const { data, statusCode } = await MessageModel.getAllMessages();
+	res.status(statusCode).json(data);
+};
 
-export const getMessageById =  async(req, res) => {
-	const { messageId } = req.params
-	const {data, statusCode} = await message.getMessageByID(messageId)
-	res.status(statusCode).json(data)
-}
+export const getMessageById = async (req, res) => {
+	const { messageId } = req.params;
+	const { data, statusCode } = await MessageModel.getMessageByID(messageId);
+	res.status(statusCode).json(data);
+};
+
+export const createMessage = async (req, res) => {
+
+	const { data, statusCode } = await MessageModel.createMessage(
+		req.body.content
+	);
+	res.status(statusCode).json({
+		messageId: data.messageId,
+		content: data.content,
+	});
+};

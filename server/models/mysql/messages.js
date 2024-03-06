@@ -3,13 +3,13 @@ import databaseConnection from '../../config/db.config.js';
 let connection;
 
 export class MessageModel {
-	async getAllMessages() {
+	static async getAllMessages() {
 		try {
 
 			connection = databaseConnection.getConnection();
 			const [result] = await connection.query('SELECT * FROM messages;');
-			console.log('👀 👉🏽 ~  result:', result);
 
+      //TODO: Refactorizar esta parte
 			return {
 				data: result,
 				statusCode: 200,
@@ -25,7 +25,7 @@ export class MessageModel {
 		}
 	}
 
-	async getMessageByID(messageId) {
+	static async getMessageByID(messageId) {
 		try {
 			connection = databaseConnection.getConnection();
 			const [result] = await connection.query(
@@ -53,4 +53,30 @@ export class MessageModel {
 			};
 		}
 	}
+
+  static async createMessage (content) {
+    try {
+      console.log('👀 👉🏽 ~  content:', content)
+      connection = databaseConnection.getConnection()
+      const [result] = await connection.query(
+        'INSERT INTO messages(content) VALUES (?);',
+        [content]
+        // ['espero pases feliz tarde', '¿cuándo nos vemos?','¿a qué hora sales?']
+      )
+      console.log('👀 👉🏽 ~  result:', result)
+      return {
+        data: {
+          messageId: result.insertId,
+          content
+        },
+        statusCode: 200
+      }
+    } catch(error) {
+      console.log('👀 👉🏽 ~  error:', error)
+      // return {
+      //   data: 'Internal Server Error',
+      //   statusCode: 500,
+      // }
+    }
+  }
 }
