@@ -56,14 +56,11 @@ export class MessageModel {
 
   static async createMessage (content) {
     try {
-      console.log('👀 👉🏽 ~  content:', content)
       connection = databaseConnection.getConnection()
       const [result] = await connection.query(
         'INSERT INTO messages(content) VALUES (?);',
         [content]
-        // ['espero pases feliz tarde', '¿cuándo nos vemos?','¿a qué hora sales?']
       )
-      console.log('👀 👉🏽 ~  result:', result)
       return {
         data: {
           messageId: result.insertId,
