@@ -12,7 +12,6 @@ export const getMessageById = async (req, res) => {
 };
 
 export const createMessage = async (req, res) => {
-
 	const { data, statusCode } = await MessageModel.createMessage(
 		req.body.content
 	);
@@ -21,3 +20,9 @@ export const createMessage = async (req, res) => {
 		content: data.content,
 	});
 };
+
+export const updateMessage = async (req,res) => {
+	const { idMessage } = req.params
+	const { content } = req.body
+	res.status().json()
+}

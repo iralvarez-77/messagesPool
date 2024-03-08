@@ -78,8 +78,11 @@ export class MessageModel {
   }
 
   static async updateMessage (id, body) {
+    console.log('👀 👉🏽 ~  body:', body)
+    console.log('👀 👉🏽 ~  id:', id)
     try {
-      
+      connection = await databaseConnection.getConnection()
+      // const [result] = '' 
     } catch (error) {
       console.log('👀 👉🏽 ~  error:', error)
       // return {
