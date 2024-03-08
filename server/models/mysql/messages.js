@@ -76,4 +76,16 @@ export class MessageModel {
       }
     }
   }
+
+  static async updateMessage (id, body) {
+    try {
+      
+    } catch (error) {
+      console.log('👀 👉🏽 ~  error:', error)
+      // return {
+      //   data: 'Internal Server Error',
+      //   statusCode: 500,
+      // }
+    }
+  }
 }
