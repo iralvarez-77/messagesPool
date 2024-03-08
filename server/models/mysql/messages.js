@@ -70,10 +70,10 @@ export class MessageModel {
       }
     } catch(error) {
       console.log('👀 👉🏽 ~  error:', error)
-      // return {
-      //   data: 'Internal Server Error',
-      //   statusCode: 500,
-      // }
+      return {
+        data: 'Internal Server Error',
+        statusCode: 500,
+      }
     }
   }
 }
