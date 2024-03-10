@@ -27,3 +27,10 @@ export const updateMessage = async (req,res) => {
 	const {data,statusCode} = MessageModel.updateMessage()
 	res.status(statusCode).json(data)
 }
+
+export const deleteMessage = async (req, res) => {
+	const {data , statusCode} = MessageModel.deleteMessage(
+		req.params.messageId
+	)
+	res.status().json(data)
+}

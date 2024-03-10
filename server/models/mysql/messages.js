@@ -92,12 +92,12 @@ export class MessageModel {
     }
   }
 
-  static async deleteMessage (id) {
+  static async deleteMessage (messageId) {
     try {
       connection = databaseConnection.getConnection()
       const [result] = await connection.query(
         'DELETED FROM messages WHERE idMessage = ?;',
-        [id]
+        [messageId]
       )
       console.log('👀 👉🏽 ~  result:', result)
     } catch (error) {
