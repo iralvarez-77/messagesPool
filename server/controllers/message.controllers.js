@@ -24,5 +24,6 @@ export const createMessage = async (req, res) => {
 export const updateMessage = async (req,res) => {
 	const { idMessage } = req.params
 	const { content } = req.body
-	res.status().json()
+	const {data,statusCode} = MessageModel.updateMessage()
+	res.status(statusCode).json(data)
 }
