@@ -91,4 +91,20 @@ export class MessageModel {
       // }
     }
   }
+
+  static async deleteMessage (id) {
+    try {
+      connection = databaseConnection.getConnection()
+      const [result] = await connection.query(
+        'DELETED FROM messages WHERE idMessage = ?;',
+        [id]
+      )
+      console.log('👀 👉🏽 ~  result:', result)
+    } catch (error) {
+      console.log('👀 👉🏽 ~  error:', error)
+      
+    }
+  }
+
+
 }
