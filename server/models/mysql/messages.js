@@ -79,8 +79,13 @@ export class MessageModel {
 		console.log('👀 👉🏽 ~  id:', id);
 		try {
 			connection = await databaseConnection.getConnection();
-			const [result] = await connection.query('UPDATE messages SET = ? content WHERE messageId = ?;',
-      [content, id])
+			const [result] = await connection.query(
+        'UPDATE messages SET content = ?  WHERE messageId = ?;',
+        [content, id]
+      )
+      return {
+        data: 
+      }
 		} catch (error) {
 			console.log('👀 👉🏽 ~  error:', error);
 			// return {

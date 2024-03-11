@@ -22,10 +22,13 @@ export const createMessage = async (req, res) => {
 };
 
 export const updateMessage = async (req,res) => {
-	const { idMessage } = req.params
+	const { messageId } = req.params
 	const { content } = req.body
-	const {data,statusCode} = await MessageModel.updateMessage()
-	res.status(statusCode).json(data)
+	// const {data,statusCode} = await MessageModel.updateMessage()
+	const result = await MessageModel.updateMessage(messageId, content)
+	console.log('👀 👉🏽 ~  result:', result)
+	// res.status(statusCode).json(data)
+	res.json(result)
 }
 
 export const deleteMessage = async (req, res) => {
