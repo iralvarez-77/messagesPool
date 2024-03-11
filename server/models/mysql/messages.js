@@ -79,19 +79,23 @@ export class MessageModel {
 		console.log('👀 👉🏽 ~  id:', id);
 		try {
 			connection = await databaseConnection.getConnection();
-			const [result] = await connection.query(
+			await connection.query(
         'UPDATE messages SET content = ?  WHERE messageId = ?;',
         [content, id]
       )
       return {
-        data: 
-      }
+				data: {
+					messageId: id,
+					content,
+				},
+				statusCode: 200,
+			};
 		} catch (error) {
 			console.log('👀 👉🏽 ~  error:', error);
-			// return {
-			//   data: 'Internal Server Error',
-			//   statusCode: 500,
-			// }
+        return {
+          data: 'Internal Server Error',
+          statusCode: 500,
+        }
 		}
 	}
 

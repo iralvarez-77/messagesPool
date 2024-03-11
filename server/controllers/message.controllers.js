@@ -6,8 +6,7 @@ export const getAllMessages = async (_req, res) => {
 };
 
 export const getMessageById = async (req, res) => {
-	const { messageId } = req.params;
-	const { data, statusCode } = await MessageModel.getMessageByID(messageId);
+	const { data, statusCode } = await MessageModel.getMessageByID(req.params.messageId,);
 	res.status(statusCode).json(data);
 };
 
@@ -22,13 +21,11 @@ export const createMessage = async (req, res) => {
 };
 
 export const updateMessage = async (req,res) => {
-	const { messageId } = req.params
-	const { content } = req.body
-	// const {data,statusCode} = await MessageModel.updateMessage()
-	const result = await MessageModel.updateMessage(messageId, content)
-	console.log('👀 👉🏽 ~  result:', result)
-	// res.status(statusCode).json(data)
-	res.json(result)
+	const { data,statusCode } = await MessageModel.updateMessage(
+		req.params.messageId,
+		req.body.content
+	)
+	res.status(statusCode).json(data)
 }
 
 export const deleteMessage = async (req, res) => {
