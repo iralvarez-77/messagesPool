@@ -5,16 +5,14 @@ let connection;
 export class MessageModel {
 	static async getAllMessages() {
 		try {
-
 			connection = databaseConnection.getConnection();
 			const [result] = await connection.query('SELECT * FROM messages;');
 
-      //TODO: Refactorizar esta parte
+			//TODO: Refactorizar esta parte
 			return {
 				data: result,
 				statusCode: 200,
 			};
-
 		} catch (error) {
 			console.log('👀 👉🏽 ~  error:', error.message);
 
@@ -33,78 +31,83 @@ export class MessageModel {
 				[messageId]
 			);
 
-      if ( result.length === 0 )
-        return {
-          data:'Resourse not found',
-          statusCode: 404
-        }
+			if (result.length === 0)
+				return {
+					data: 'Resourse not found',
+					statusCode: 404,
+				};
 
-      return {
+			return {
 				data: result[0],
 				statusCode: 200,
 			};
-
 		} catch (error) {
 			console.log('👀 👉🏽 ~  error:', error.message);
 
-      return {
+			return {
 				data: 'Internal Server Error',
 				statusCode: 500,
 			};
 		}
 	}
 
-  static async createMessage (content) {
-    try {
-      connection = databaseConnection.getConnection()
-      const [result] = await connection.query(
-        'INSERT INTO messages(content) VALUES (?);',
-        [content]
-      )
-      return {
-        data: {
-          messageId: result.insertId,
-          content
-        },
-        statusCode: 200
-      }
-    } catch(error) {
-      console.log('👀 👉🏽 ~  error:', error)
-      return {
-        data: 'Internal Server Error',
-        statusCode: 500,
-      }
-    }
-  }
+	static async createMessage(content) {
+		try {
+			connection = databaseConnection.getConnection();
+			const [result] = await connection.query(
+				'INSERT INTO messages(content) VALUES (?);',
+				[content]
+			);
+			return {
+				data: {
+					messageId: result.insertId,
+					content,
+				},
+				statusCode: 200,
+			};
+		} catch (error) {
+			console.log('👀 👉🏽 ~  error:', error);
+			return {
+				data: 'Internal Server Error',
+				statusCode: 500,
+			};
+		}
+	}
 
-  static async updateMessage (id, body) {
-    console.log('👀 👉🏽 ~  body:', body)
-    console.log('👀 👉🏽 ~  id:', id)
-    try {
-      connection = await databaseConnection.getConnection()
-      // const [result] = '' 
-    } catch (error) {
-      console.log('👀 👉🏽 ~  error:', error)
-      // return {
-      //   data: 'Internal Server Error',
-      //   statusCode: 500,
-      // }
-    }
-  }
+	static async updateMessage(id, body) {
+		console.log('👀 👉🏽 ~  body:', body);
+		console.log('👀 👉🏽 ~  id:', id);
+		try {
+			connection = await databaseConnection.getConnection();
+			// const [result] = ''
+		} catch (error) {
+			console.log('👀 👉🏽 ~  error:', error);
+			// return {
+			//   data: 'Internal Server Error',
+			//   statusCode: 500,
+			// }
+		}
+	}
 
-  static async deleteMessage (messageId) {
-    try {
-      connection = databaseConnection.getConnection()
-      const [result] = await connection.query(
-        'DELETED FROM messages WHERE idMessage = ?;',
-        [messageId]
-      )
-      console.log('👀 👉🏽 ~  result:', result)
-    } catch (error) {
-      console.log('👀 👉🏽 ~  error:', error)
+	static async deleteMessage(messageId) {
+		console.log('👀 👉🏽 ~  messageId:', messageId);
+		try {
+			connection = databaseConnection.getConnection();
+			await connection.query(
+				'DELETE FROM messages WHERE messageId = ?;',
+				[messageId]
+			);
       
-    }
-  }
-
-
+      return {
+        data: 'No content',
+        statusCode: 204
+      }
+		} catch (error) {
+			console.log('👀 👉🏽 ~  error:', error);
+      return {
+				data: 'Internal Server Error',
+				statusCode: 500,
+			};
+		}
+	}
 }

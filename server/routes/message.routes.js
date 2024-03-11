@@ -7,6 +7,6 @@ router.get('/', getAllMessages);
 router.get('/:messageId', getMessageById);
 router.post('/', createMessage);
 router.put('/:messageId', updateMessage);
-router.deleted('/:messageId', deleteMessage);
+router.delete('/:messageId', deleteMessage);
 
 export default router;

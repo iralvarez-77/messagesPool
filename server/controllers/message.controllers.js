@@ -24,13 +24,13 @@ export const createMessage = async (req, res) => {
 export const updateMessage = async (req,res) => {
 	const { idMessage } = req.params
 	const { content } = req.body
-	const {data,statusCode} = MessageModel.updateMessage()
+	const {data,statusCode} = await MessageModel.updateMessage()
 	res.status(statusCode).json(data)
 }
 
 export const deleteMessage = async (req, res) => {
-	const {data , statusCode} = MessageModel.deleteMessage(
+	const { data , statusCode } = await MessageModel.deleteMessage(
 		req.params.messageId
 	)
-	res.status().json(data)
+	res.status(statusCode).json(data)
 }
