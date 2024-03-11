@@ -74,12 +74,13 @@ export class MessageModel {
 		}
 	}
 
-	static async updateMessage(id, body) {
-		console.log('👀 👉🏽 ~  body:', body);
+	static async updateMessage(id, content) {
+		console.log('👀 👉🏽 ~  content:', content);
 		console.log('👀 👉🏽 ~  id:', id);
 		try {
 			connection = await databaseConnection.getConnection();
-			// const [result] = ''
+			const [result] = await connection.query('UPDATE messages SET = ? content WHERE messageId = ?;',
+      [content, id])
 		} catch (error) {
 			console.log('👀 👉🏽 ~  error:', error);
 			// return {
@@ -97,7 +98,7 @@ export class MessageModel {
 				'DELETE FROM messages WHERE messageId = ?;',
 				[messageId]
 			);
-      
+
       return {
         data: 'No content',
         statusCode: 204
