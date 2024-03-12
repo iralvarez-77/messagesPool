@@ -75,8 +75,6 @@ export class MessageModel {
 	}
 
 	static async updateMessage(id, content) {
-		console.log('👀 👉🏽 ~  content:', content);
-		console.log('👀 👉🏽 ~  id:', id);
 		try {
 			connection = await databaseConnection.getConnection();
 			await connection.query(
@@ -100,13 +98,18 @@ export class MessageModel {
 	}
 
 	static async deleteMessage(messageId) {
-		console.log('👀 👉🏽 ~  messageId:', messageId);
 		try {
 			connection = databaseConnection.getConnection();
-			await connection.query(
+			const [result] = await connection.query(
 				'DELETE FROM messages WHERE messageId = ?;',
 				[messageId]
 			);
+
+      if (result.affectedRows === 0 ) 
+        return {
+          data: 'Message not found',
+          statusCode: 404
+        }
 
       return {
         data: 'No content',
