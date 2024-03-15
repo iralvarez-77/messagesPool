@@ -1,3 +1,4 @@
+import { returnFn } from '../../common/index.js';
 import databaseConnection from '../../config/db.config.js';
 
 let connection;
@@ -9,10 +10,8 @@ export class MessageModel {
 			const [result] = await connection.query('SELECT * FROM messages;');
 
 			//TODO: Refactorizar esta parte
-			return {
-				data: result,
-				statusCode: 200,
-			};
+			return returnFn(result, 200)
+
 		} catch (error) {
 			console.log('👀 👉🏽 ~  error:', error.message);
 
@@ -32,15 +31,10 @@ export class MessageModel {
 			);
 
 			if (result.length === 0)
-				return {
-					data: 'Resourse not found',
-					statusCode: 404,
-				};
-
-			return {
-				data: result[0],
-				statusCode: 200,
-			};
+				returnFn('Resourse not found', 404)
+			
+			return returnFn(result[0], 200)
+			
 		} catch (error) {
 			console.log('👀 👉🏽 ~  error:', error.message);
 
@@ -58,13 +52,14 @@ export class MessageModel {
 				'INSERT INTO messages(content) VALUES (?);',
 				[content]
 			);
-			return {
-				data: {
-					messageId: result.insertId,
-					content,
-				},
-				statusCode: 200,
-			};
+
+			const data =  {
+				messageId: result.insertId,
+				content,
+			}
+
+			return returnFn(data, 200)
+
 		} catch (error) {
 			console.log('👀 👉🏽 ~  error:', error);
 			return {
@@ -81,13 +76,14 @@ export class MessageModel {
         'UPDATE messages SET content = ?  WHERE messageId = ?;',
         [content, id]
       )
-      return {
+			const data = {
 				data: {
 					messageId: id,
 					content,
-				},
-				statusCode: 200,
+				}
 			};
+			return returnFn(data, 200 )
+    
 		} catch (error) {
 			console.log('👀 👉🏽 ~  error:', error);
         return {
