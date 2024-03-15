@@ -1,5 +1,5 @@
-export const returnFn = (data , error) => ({
-  statusCode: error ? error: 200,
+export const returnFn = (data , code) => ({
+  statusCode: code ? code : 200,
   data: data ? data : '',
   headers: {
     'Access-Control-Allow-Origin': '*',

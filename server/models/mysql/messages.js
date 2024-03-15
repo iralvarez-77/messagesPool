@@ -52,6 +52,7 @@ export class MessageModel {
 				'INSERT INTO messages(content) VALUES (?);',
 				[content]
 			);
+			console.log('👀 👉🏽 ~  result:', result)
 
 			const data =  {
 				messageId: result.insertId,
@@ -62,10 +63,9 @@ export class MessageModel {
 
 		} catch (error) {
 			console.log('👀 👉🏽 ~  error:', error);
-			return {
-				data: 'Internal Server Error',
-				statusCode: 500,
-			};
+			(error.code === 'ER_DUP_ENTRY') 
+				? return returnFn('El mensaje ya existe.', 400)
+				: return returnFn('Internal server error', 500)
 		}
 	}
 
