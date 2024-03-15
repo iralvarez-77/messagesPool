@@ -1,3 +1,11 @@
-export const returnFn = (data , statusCode) => {
-
-}
+export const returnFn = (data , error) => ({
+  statusCode: error ? error: 200,
+  data: data ? data : '',
+  headers: {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Headers':
+      'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token',
+    'Access-Control-Allow-Credentials': 'true',
+    'Access-Control-Allow-Methods': '*',
+  },
+})
