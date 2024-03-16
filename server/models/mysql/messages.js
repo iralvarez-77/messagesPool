@@ -9,16 +9,11 @@ export class MessageModel {
 			connection = databaseConnection.getConnection();
 			const [result] = await connection.query('SELECT * FROM messages;');
 
-			//TODO: Refactorizar esta parte
 			return returnFn(result, 200)
 
 		} catch (error) {
-			console.log('👀 👉🏽 ~  error:', error.message);
-
-			return {
-				data: 'Internal Server Error',
-				statusCode: 500,
-			};
+			console.log('👀 👉🏽 ~  error:', error);
+			return returnFn(error.message, 500)
 		}
 	}
 
@@ -30,18 +25,14 @@ export class MessageModel {
 				[messageId]
 			);
 
-			if (result.length === 0)
-				returnFn('Resourse not found', 404)
+			if (result.length === 0) throw new Error()
 			
 			return returnFn(result[0], 200)
 			
 		} catch (error) {
 			console.log('👀 👉🏽 ~  error:', error.message);
-
-			return {
-				data: 'Internal Server Error',
-				statusCode: 500,
-			};
+			if (error.message === "") return returnFn('Message not found', 404)
+			return returnFn(error.message, 500)
 		}
 	}
 
@@ -58,10 +49,11 @@ export class MessageModel {
 				content,
 			}
 
-			return returnFn(data, 200)
+			return returnFn(data, 201)
 
 		} catch (error) {
 			console.log('👀 👉🏽 ~  error:', error);
+			if ( error.code === 'ER_DUP_ENTRY') return returnFn(error.message, 400)
 			return returnFn(error.message, 500)
 		}
 	}
@@ -69,24 +61,23 @@ export class MessageModel {
 	static async updateMessage(id, content) {
 		try {
 			connection = await databaseConnection.getConnection();
-			await connection.query(
+			const [result] = await connection.query(
         'UPDATE messages SET content = ?  WHERE messageId = ?;',
         [content, id]
       )
+
+			if (result.insertId === 0) throw new Error();
+			
 			const data = {
-				data: {
 					messageId: id,
 					content,
-				}
 			};
-			return returnFn(data, 200 )
-    
+			return returnFn(data, 200)
+			
 		} catch (error) {
 			console.log('👀 👉🏽 ~  error:', error);
-        return {
-          data: 'Internal Server Error',
-          statusCode: 500,
-        }
+			if (error.message === "") return returnFn('message not found', 404)
+			return returnFn(error.message, 500)
 		}
 	}
 
@@ -98,22 +89,13 @@ export class MessageModel {
 				[messageId]
 			);
 
-      if (result.affectedRows === 0 ) 
-        return {
-          data: 'Message not found',
-          statusCode: 404
-        }
+      if (result.affectedRows === 0 ) throw new Error()
+			return returnFn('No content', 204)
 
-      return {
-        data: 'No content',
-        statusCode: 204
-      }
 		} catch (error) {
 			console.log('👀 👉🏽 ~  error:', error);
-      return {
-				data: 'Internal Server Error',
-				statusCode: 500,
-			};
+			if (error.message === "") return returnFn('Message not found', 404)
+			return returnFn(error.message, 500)
 		}
 	}
 }

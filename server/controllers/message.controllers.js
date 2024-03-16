@@ -24,10 +24,7 @@ export const updateMessage = async (req, res) => {
 		req.params.messageId,
 		req.body.content
 	);
-	res.status(statusCode).json({
-		messageId: data.messageId,
-		content: data.content,
-	});
+	res.status(statusCode).json(data);
 };
 
 export const deleteMessage = async (req, res) => {

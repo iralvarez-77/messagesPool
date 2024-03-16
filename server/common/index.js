@@ -1,6 +1,6 @@
 export const returnFn = (data , code) => ({
   statusCode: code ? code : 200,
-  data: data ? data : '',
+  data: data ? data : 'not exists',
   headers: {
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Headers':
