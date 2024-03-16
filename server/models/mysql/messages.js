@@ -1,4 +1,4 @@
-import { returnFn } from '../../common/index.js';
+import { responseFn } from '../../common/index.js';
 import databaseConnection from '../../config/db.config.js';
 
 let connection;
@@ -9,11 +9,11 @@ export class MessageModel {
 			connection = databaseConnection.getConnection();
 			const [result] = await connection.query('SELECT * FROM messages;');
 
-			return returnFn(result, 200)
+			return responseFn(result, 200)
 
 		} catch (error) {
 			console.log('👀 👉🏽 ~  error:', error);
-			return returnFn(error.message, 500)
+			return responseFn(error.message, 500)
 		}
 	}
 
@@ -27,12 +27,12 @@ export class MessageModel {
 
 			if (result.length === 0) throw new Error()
 			
-			return returnFn(result[0], 200)
+			return responseFn(result[0], 200)
 			
 		} catch (error) {
 			console.log('👀 👉🏽 ~  error:', error.message);
-			if (error.message === "") return returnFn('Message not found', 404)
-			return returnFn(error.message, 500)
+			if (error.message === "") return responseFn('Message not found', 404)
+			return responseFn(error.message, 500)
 		}
 	}
 
@@ -49,12 +49,12 @@ export class MessageModel {
 				content,
 			}
 
-			return returnFn(data, 201)
+			return responseFn(data, 201)
 
 		} catch (error) {
 			console.log('👀 👉🏽 ~  error:', error);
-			if ( error.code === 'ER_DUP_ENTRY') return returnFn(error.message, 400)
-			return returnFn(error.message, 500)
+			if ( error.code === 'ER_DUP_ENTRY') return responseFn(error.message, 400)
+			return responseFn(error.message, 500)
 		}
 	}
 
@@ -72,12 +72,12 @@ export class MessageModel {
 					messageId: id,
 					content,
 			};
-			return returnFn(data, 200)
+			return responseFn(data, 200)
 			
 		} catch (error) {
 			console.log('👀 👉🏽 ~  error:', error);
-			if (error.message === "") return returnFn('message not found', 404)
-			return returnFn(error.message, 500)
+			if (error.message === "") return responseFn('message not found', 404)
+			return responseFn(error.message, 500)
 		}
 	}
 
@@ -90,12 +90,12 @@ export class MessageModel {
 			);
 
       if (result.affectedRows === 0 ) throw new Error()
-			return returnFn('No content', 204)
+			return responseFn('No content', 204)
 
 		} catch (error) {
 			console.log('👀 👉🏽 ~  error:', error);
-			if (error.message === "") return returnFn('Message not found', 404)
-			return returnFn(error.message, 500)
+			if (error.message === "") return responseFn('Message not found', 404)
+			return responseFn(error.message, 500)
 		}
 	}
 }

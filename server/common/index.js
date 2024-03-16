@@ -1,4 +1,4 @@
-export const returnFn = (data , code) => ({
+export const responseFn = (data , code) => ({
   statusCode: code ? code : 200,
   data: data ? data : 'not exists',
   headers: {
