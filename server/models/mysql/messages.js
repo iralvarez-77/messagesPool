@@ -49,13 +49,12 @@ export class MessageModel {
 				[content, date]
 			);
 
-			// const data =  {
-			// 	messageId: result.insertId,
-			// 	content,
-			// 	createdAt: date
-			// }
+			const data =  {
+				messageId: result.insertId,
+				content,
+			}
 
-			return responseFn('Message created', 201)
+			return responseFn(data, 201)
 
 		} catch (error) {
 			console.log('👀 👉🏽 ~  error:', error);
@@ -74,12 +73,11 @@ export class MessageModel {
 
 			if (result.affectedRows === 0) throw new Error();
 			
-			// const data = {
-			// 		messageId: id,
-			// 		content,
-			// 		updatedAt: date
-			// };
-			return responseFn('Message updated', 200)
+			const data = {
+					messageId: id,
+					content,
+			};
+			return responseFn(data, 200)
 			
 		} catch (error) {
 			console.log('👀 👉🏽 ~  error:', error);
