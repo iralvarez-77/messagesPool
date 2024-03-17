@@ -1,19 +1,19 @@
 import { responseFn } from '../../common/index.js';
 import databaseConnection from '../../config/db.config.js';
 import dayjs from 'dayjs';
+
 let connection;
 
-const date = dayjs().format()
+const date = dayjs().format();
 
 export class MessageModel {
 	static async getAllMessages() {
 		try {
 			connection = databaseConnection.getConnection();
-			const [result] = await connection.query('SELECT * FROM messages;');
+			const [results] = await connection.query('SELECT * FROM messages;');
 
-			if (result.length === 0) throw new Error()
-
-			return responseFn(result, 200)
+			if (results.length === 0) throw new Error()
+			return responseFn(results, 200)
 
 		} catch (error) {
 			console.log('👀 👉🏽 ~  error:', error);
@@ -49,13 +49,13 @@ export class MessageModel {
 				[content, date]
 			);
 
-			const data =  {
-				messageId: result.insertId,
-				content,
-				createdAt: date
-			}
+			// const data =  {
+			// 	messageId: result.insertId,
+			// 	content,
+			// 	createdAt: date
+			// }
 
-			return responseFn(data, 201)
+			return responseFn('Message created', 201)
 
 		} catch (error) {
 			console.log('👀 👉🏽 ~  error:', error);
@@ -74,12 +74,12 @@ export class MessageModel {
 
 			if (result.affectedRows === 0) throw new Error();
 			
-			const data = {
-					messageId: id,
-					content,
-					updatedAt: date
-			};
-			return responseFn(data, 200)
+			// const data = {
+			// 		messageId: id,
+			// 		content,
+			// 		updatedAt: date
+			// };
+			return responseFn('Message updated', 200)
 			
 		} catch (error) {
 			console.log('👀 👉🏽 ~  error:', error);
