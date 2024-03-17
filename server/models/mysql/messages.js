@@ -1,7 +1,9 @@
 import { responseFn } from '../../common/index.js';
 import databaseConnection from '../../config/db.config.js';
-
+import dayjs from 'dayjs';
 let connection;
+
+const date = dayjs().format()
 
 export class MessageModel {
 	static async getAllMessages() {
@@ -9,10 +11,13 @@ export class MessageModel {
 			connection = databaseConnection.getConnection();
 			const [result] = await connection.query('SELECT * FROM messages;');
 
+			if (result.length === 0) throw new Error()
+
 			return responseFn(result, 200)
 
 		} catch (error) {
 			console.log('👀 👉🏽 ~  error:', error);
+			if (error.message === "") return responseFn([], 404)
 			return responseFn(error.message, 500)
 		}
 	}
@@ -40,13 +45,14 @@ export class MessageModel {
 		try {
 			connection = databaseConnection.getConnection();
 			const [result] = await connection.query(
-				'INSERT INTO messages(content) VALUES (?);',
-				[content]
+				'INSERT INTO messages(content, createdAt) VALUES (?, ?);',
+				[content, date]
 			);
 
 			const data =  {
 				messageId: result.insertId,
 				content,
+				createdAt: date
 			}
 
 			return responseFn(data, 201)
@@ -62,15 +68,16 @@ export class MessageModel {
 		try {
 			connection = await databaseConnection.getConnection();
 			const [result] = await connection.query(
-        'UPDATE messages SET content = ?  WHERE messageId = ?;',
-        [content, id]
+        'UPDATE messages SET content = ?, updatedAt = ? WHERE messageId = ?;',
+        [content, date, id]
       )
 
-			if (result.insertId === 0) throw new Error();
+			if (result.affectedRows === 0) throw new Error();
 			
 			const data = {
 					messageId: id,
 					content,
+					updatedAt: date
 			};
 			return responseFn(data, 200)
 			
@@ -90,7 +97,7 @@ export class MessageModel {
 			);
 
       if (result.affectedRows === 0 ) throw new Error()
-			return responseFn('No content', 204)
+			return responseFn('Message deleted successfully', 204)
 
 		} catch (error) {
 			console.log('👀 👉🏽 ~  error:', error);
