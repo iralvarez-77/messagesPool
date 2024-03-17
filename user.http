@@ -1,0 +1,16 @@
+POST http://localhost:4000/api/v1/users
+content-type: application/json
+
+{
+  "userName": "Iraida",
+  "alias": "mamá"
+}
+
+###
+GET http://localhost:4000/api/v1/users
+
+
+###
+GET http://localhost:4000/api/v1/users/id
+
+###
