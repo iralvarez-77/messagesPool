@@ -7,3 +7,8 @@ export const createUser = async (req, res) => {
   console.log('👀 👉🏽 ~  data:', data)
   res.status(201).json(data)
 }
+
+export const getAllUsers = async (_req, res) => {
+  const  data = await UserModel.getAllUsers()
+  res.status(200).json(data)
+}
