@@ -2,7 +2,7 @@
 import mysql from 'mysql2/promise';
 
 class DatabaseConnection {
-	constructor() {
+	constructor() { 
 		this.connection = null;
 		this._createConnection() //encapsulando la lógica de conexión
 	}

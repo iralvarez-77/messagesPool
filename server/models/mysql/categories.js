@@ -1,70 +1,52 @@
-import databaseConnection from '../../config/db.config.js'
-import dayjs from 'dayjs'
+import databaseConnection from "../../config/db.config.js"
+import dayjs from "dayjs"
 
 let connection
 const date = dayjs().format()
-export class UserModel {
 
-  static async createUser ({userName, alias}) {
+export class CategoryModel {
+  static async createCategory ({categoryName}) {
     try {
       connection = databaseConnection.getConnection()
       const [result] = await connection.query(
-        'INSERT INTO result(userName, alias, createdAt) VALUES(?,?,?);',
-        [userName,alias, date]
+        'INSERT INTO categories(categoryName, createdAt) VALUES(?,?);',
+        [categoryName, date]
       )
-      console.log('👀 👉🏽 ~  result:', result)
-      return result
-    } catch (error) {
-      console.log('👀 👉🏽 ~  error:', error)
-      
-    }
-  }
-
-  static async getAllUsers () {
-    try {
-      connection = databaseConnection.getConnection()
-      const [ users ] = await connection.query(
-        'SELECT * FROM users;'
-      )
-      return users
-    } catch (error) {
-      console.log('👀 👉🏽 ~  error:', error)
-      
-    }
-  }
-
-  static async getUser (userId) {
-    try {
-      connection = databaseConnection.getConnection()
-      const [user] = await connection.query(
-        'SELECT * FROM users WHERE userId = ?;',
-        [userId]
-      )
-      return user[0]
-    } catch (error) {
-      console.log('👀 👉🏽 ~  error:', error)
-      
-    }
-  }
-  static async updateUser (userId, {userName, alias}) {
-    try {
-      connection = databaseConnection.getConnection()
-      const [result] = await connection.query(
-      'UPDATE users SET userName = ?, alias = ?, updatedAt = ?  WHERE userId = ?;',
-      [userName,alias, date, userId]
-      )
-
       return result
     } catch (error) {
       console.log('👀 👉🏽 ~  error:', error)
     }
   }
-  static async deleteUser (userId) {
+  static async getAllCategories(){
+    try {
+      connection = databaseConnection.getConnection()
+      const [categories] = await connection.query(
+        'SELECT * FROM categories;',
+      )
+      return categories
+    } catch (error) {
+      console.log('👀 👉🏽 ~  error:', error)
+    }
+  }
+  static async getCategory (categoryId) {
+    try {
+      connection = databaseConnection.getConnection()
+      const [category] = await connection.query(
+        'SELECT * FROM categories WHERE categoryId = ?;',
+        [categoryId]
+      )
+      return category[0]
+    } catch (error) {
+      console.log('👀 👉🏽 ~  error:', error)
+      
+    }
+  }
+  static async updateCategory (categoryId, {categoryName}) {
     try {
       connection = databaseConnection.getConnection()
       const [result] = await connection.query(
-        'DELETE FROM users WHERE userId = ?;',
-        [userId]
+        'UPDATE categories SET categoryName = ?, updatedAt = ?  WHERE categoryId = ?;',
+        [categoryName, date, categoryId]
       )
       return result
     } catch (error) {
@@ -72,4 +54,16 @@ export class UserModel {
       
     }
   }
+  static async deleteCategory (categoryId) {
+    try {
+      connection = databaseConnection.getConnection()
+      const [result] = await connection.query(
+        'DELETE FROM categories WHERE categoryId = ?',
+        [categoryId]
+      )
+      return result
+    } catch (error) {
+      console.log('👀 👉🏽 ~  error:', error)
+    }
   }
+}

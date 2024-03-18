@@ -1,3 +1,5 @@
+
+###################### USERS ####################
 POST http://localhost:4000/api/v1/users
 content-type: application/json
 
@@ -6,11 +8,49 @@ content-type: application/json
   "alias": "mamá"
 }
 
-###
+### 
 GET http://localhost:4000/api/v1/users
 
 
 ###
-GET http://localhost:4000/api/v1/users/id
+GET http://localhost:4000/api/v1/users/9
 
 ###
+PUT http://localhost:4000/api/v1/users/9
+content-type: application/json
+
+{
+  "userName": "Iraira",
+  "alias": "mamá"
+}
+
+###
+DELETE http://localhost:4000/api/v1/users/6
+
+###################### CATEGORIES ####################
+
+POST http://localhost:4000/api/v1/categories
+content-type: application/json
+
+{
+  "categoryName": "amigos"
+}
+
+###
+GET http://localhost:4000/api/v1/categories
+
+###
+GET http://localhost:4000/api/v1/categories/9
+
+###
+PUT http://localhost:4000/api/v1/categories/10
+content-type: application/json
+
+{
+  "categoryName": "amigos"
+}
+
+###
+DELETE http://localhost:4000/api/v1/categories/9
+
+###################### ####################
