@@ -4,8 +4,8 @@ POST http://localhost:4000/api/v1/users
 content-type: application/json
 
 {
-  "userName": "Iraida",
-  "alias": "mamá"
+  "userName": "Mathías",
+  "alias": "mathius"
 }
 
 ### 
@@ -13,7 +13,7 @@ GET http://localhost:4000/api/v1/users
 
 
 ###
-GET http://localhost:4000/api/v1/users/9
+GET http://localhost:4000/api/v1/users/11
 
 ###
 PUT http://localhost:4000/api/v1/users/9
@@ -25,7 +25,7 @@ content-type: application/json
 }
 
 ###
-DELETE http://localhost:4000/api/v1/users/6
+DELETE http://localhost:4000/api/v1/users/11
 
 ###################### CATEGORIES ####################
 
@@ -53,4 +53,29 @@ content-type: application/json
 ###
 DELETE http://localhost:4000/api/v1/categories/9
 
-###################### ####################
+######################   MESSAGES   ####################
+
+###
+POST http://localhost:4000/api/v1/users
+content-type: application/json
+
+{
+  "userName": "Iraida",
+  "alias": "mamá"
+}
+
+###
+GET http://localhost:4000/api/v1/messages
+###
+GET http://localhost:4000/api/v1/messages/2
+
+###
+PUT http://localhost:4000/api/v1/messages/10
+content-type: application/json
+
+{
+  "categoryName": "amigos"
+}
+
+###
+DELETE http://localhost:4000/api/v1/messages/9

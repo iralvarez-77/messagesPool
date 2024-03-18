@@ -1,4 +1,5 @@
 import databaseConnection from '../../config/db.config.js'
+import { responseFn } from '../../common/index.js'
 import dayjs from 'dayjs'
 
 let connection
@@ -9,14 +10,19 @@ export class UserModel {
     try {
       connection = databaseConnection.getConnection()
       const [result] = await connection.query(
-        'INSERT INTO result(userName, alias, createdAt) VALUES(?,?,?);',
+        'INSERT INTO users(userName, alias, createdAt) VALUES(?,?,?);',
         [userName,alias, date]
       )
-      console.log('👀 👉🏽 ~  result:', result)
-      return result
+      const data = {
+        userId: result.insertId,
+        userName,
+        alias
+      }
+      return responseFn(data, 201)
     } catch (error) {
       console.log('👀 👉🏽 ~  error:', error)
-      
+      if(error.code === 'ER_DUP_ENTRY') return responseFn(error.message, 400)
+      return responseFn(error.message, 500)
     }
   }
 
@@ -26,10 +32,12 @@ export class UserModel {
       const [ users ] = await connection.query(
         'SELECT * FROM users;'
       )
-      return users
+      if (users.length === 0) throw new Error()
+      return responseFn(users, 200)
     } catch (error) {
       console.log('👀 👉🏽 ~  error:', error)
-      
+      if (error.code === "") return responseFn([], 404)
+      return responseFn(error.message, 500)
     }
   }
 
@@ -40,12 +48,16 @@ export class UserModel {
         'SELECT * FROM users WHERE userId = ?;',
         [userId]
       )
-      return user[0]
+      if (user.length === 0) throw new Error()
+      return responseFn(user[0], 200)
     } catch (error) {
       console.log('👀 👉🏽 ~  error:', error)
+      if (error.message === "") return responseFn('User not found', 404)
+      return responseFn(error.message, 500)
       
     }
   }
+
   static async updateUser (userId, {userName, alias}) {
     try {
       connection = databaseConnection.getConnection()
@@ -54,11 +66,22 @@ export class UserModel {
       [userName,alias, date, userId]
       )
 
-      return result
+      if (result.affectedRows === 0) throw new Error()
+
+      const data = {
+        userId,
+        userName,
+        alias
+      }
+
+      return responseFn(data, 200)
     } catch (error) {
       console.log('👀 👉🏽 ~  error:', error)
+      if(error.message === "") return responseFn('User not found', 404)
+      return responseFn(error.message, 500)
     }
   }
+
   static async deleteUser (userId) {
     try {
       connection = databaseConnection.getConnection()
@@ -66,10 +89,13 @@ export class UserModel {
         'DELETE FROM users WHERE userId = ?;',
         [userId]
       )
-      return result
+      if(result.affectedRows === 0) throw new Error()
+
+      return responseFn('User deleted',204)
     } catch (error) {
       console.log('👀 👉🏽 ~  error:', error)
-      
+      if (error.message === "") return responseFn('User not found', 404)
+      return responseFn(error.message, 500)
     }
   }
   }

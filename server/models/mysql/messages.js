@@ -10,10 +10,10 @@ export class MessageModel {
 	static async getAllMessages() {
 		try {
 			connection = databaseConnection.getConnection();
-			const [results] = await connection.query('SELECT * FROM messages;');
+			const [messages] = await connection.query('SELECT * FROM messages;');
 
-			if (results.length === 0) throw new Error()
-			return responseFn(results, 200)
+			if (messages.length === 0) throw new Error()
+			return responseFn(messages, 200)
 
 		} catch (error) {
 			console.log('👀 👉🏽 ~  error:', error);
@@ -25,14 +25,14 @@ export class MessageModel {
 	static async getMessageByID(messageId) {
 		try {
 			connection = databaseConnection.getConnection();
-			const [result] = await connection.query(
+			const [message] = await connection.query(
 				'SELECT * FROM messages WHERE messageId = ?;',
 				[messageId]
 			);
 
-			if (result.length === 0) throw new Error()
+			if (message.length === 0) throw new Error()
 			
-			return responseFn(result[0], 200)
+			return responseFn(message[0], 200)
 			
 		} catch (error) {
 			console.log('👀 👉🏽 ~  error:', error.message);
