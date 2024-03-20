@@ -1,4 +1,5 @@
 import { CategoryModel } from "../models/mysql/categories.js";
+import { CategoriesMessagesModel } from "../models/mysql/categories_messages.js";
 
 export const createCategory = async (req, res) => {
   const newCategory = await CategoryModel.createCategory(req.body)
@@ -25,4 +26,9 @@ export const updateCategory = async (req, res) => {
 export const deleteCategory = async  (req, res) => {
   const deletedCategory = await CategoryModel.deleteCategory(req.params.categoryId)
   res.status(204).json(deletedCategory)
+}
+
+export const getMessagesByCategoryId = async  (req, res) => {
+  const data = await CategoriesMessagesModel.getMessagesByCategoryId(req.params.categoryId)
+  res.status(200).json(data)
 }

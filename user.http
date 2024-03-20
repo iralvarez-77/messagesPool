@@ -80,10 +80,12 @@ content-type: application/json
 DELETE http://localhost:4000/api/v1/messages/88
 
 ###
-POST http://localhost:4000/api/v1/messages/89/categories
+POST http://localhost:4000/api/v1/messages/93/categories
 content-type: application/json
 
 {
-  "categoriesIds" : [7,10,11]
+  "categoriesIds" : [12]
 }
 
+### OBTENER EL MENSAJE O GRUPOS DE MENSAJES POR UNA CATEGORÍA ###
+GET http://localhost:4000/api/v1/categories/11/messages
