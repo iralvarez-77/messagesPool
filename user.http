@@ -79,13 +79,16 @@ content-type: application/json
 ###
 DELETE http://localhost:4000/api/v1/messages/88
 
-###
-POST http://localhost:4000/api/v1/messages/93/categories
+### CREAR RELACION ENTRE MENSAJES Y CATEGORIAS #####3
+POST http://localhost:4000/api/v1/messages/90/categories
 content-type: application/json
 
 {
-  "categoriesIds" : [12]
+  "categoriesIds" : [7,10]
 }
 
 ### OBTENER EL MENSAJE O GRUPOS DE MENSAJES POR UNA CATEGORÍA ###
 GET http://localhost:4000/api/v1/categories/11/messages
+
+### OBTENER LA CATEGORÍA O GRUPO DE CATEGORÍAS POR UN MENSAJE ###
+GET http://localhost:4000/api/v1/messages/89/categories
