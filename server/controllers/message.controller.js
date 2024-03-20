@@ -1,4 +1,5 @@
 import { MessageModel } from '../models/mysql/messages.js';
+import { CategoriesMessagesModel } from '../models/mysql/categories_messages.js';
 
 export const getAllMessages = async (_req, res) => {
 	const { data, statusCode } = await MessageModel.getAllMessages();
@@ -33,3 +34,17 @@ export const deleteMessage = async (req, res) => {
 	);
 	res.status(statusCode).json(data);
 };
+
+export const createRelation = async ( req, res ) => {
+  const {data, statusCode} = await CategoriesMessagesModel.createRelation(
+    req.params.messageId,
+    req.body.categoriesIds)
+  res.status(statusCode).json(data)
+}
+
+export const getCategoriesByMessageId = async (req, res) => {
+	const { data, statusCode } =  await CategoriesMessagesModel.getCategoriesByMessageId(
+		req.params.messageId,
+	)
+	res.status(statusCode).json(data)
+}

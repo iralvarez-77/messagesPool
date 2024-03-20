@@ -3,7 +3,7 @@ import { responseFn } from '../../common/index.js';
 
 let connection;
 export class CategoriesMessagesModel {
-	static async create(messageId, categoriesIds) {
+	static async createRelation(messageId, categoriesIds) {
 		try {
 			let data = [];
 			connection = await databaseConnection.getConnection();
@@ -27,6 +27,7 @@ export class CategoriesMessagesModel {
 			return responseFn(error.message, 500);
 		}
 	}
+
 	static async getMessagesByCategoryId(categoryId) {
 		try {
 			connection = databaseConnection.getConnection();
@@ -42,8 +43,28 @@ export class CategoriesMessagesModel {
       return responseFn(messages, 200)
 		} catch (error) {
 			console.log('👀 👉🏽 ~  error:', error);
-      if (error.message === "") return responseFn(error.message, 404)
+      if (error.message === "") return responseFn([], 404)
       return responseFn(error.message, 500)
 		}
 	}
+
+  static async getCategoriesByMessageId (messageId) {
+    try {
+      connection = databaseConnection.getConnection()
+      const [categories] = await connection.query(
+        `SELECT m.messageId, categoryName, content 
+          FROM categories c
+          INNER JOIN categories_messages cm ON c.categoryId = cm.categoryID
+          INNER JOIN messages m ON cm.messageID = m.messageId
+          WHERE m.messageId = ?`,
+        [messageId]
+      )
+      if (categories.length === 0) throw new Error()
+      return responseFn(categories, 200)
+    } catch (error) {
+      console.log('👀 👉🏽 ~  error:', error)
+      if(error.message === "") return responseFn([], 404)
+      responseFn(error.message, 500)
+    }
+  }
 }
