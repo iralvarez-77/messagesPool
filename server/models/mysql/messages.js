@@ -7,13 +7,14 @@ let connection;
 const date = dayjs().format();
 
 export class MessageModel {
-	static async getAllMessages() {
+	static async getAllMessages({ nunPage, pageSize }) {
+		const page = parseInt(nunPage);
+		const limit = parseInt(pageSize);
+
 		try {
-			const limit = 2;
-			const page = 1;
 			const offset = (page - 1) * limit;
 			connection = databaseConnection.getConnection();
-			
+
 			const [messages] = await connection.query(
 				'SELECT * FROM messages LIMIT ?,?;',
 				[offset, limit]
