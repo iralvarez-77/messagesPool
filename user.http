@@ -69,17 +69,17 @@ GET http://localhost:4000/api/v1/messages
 GET http://localhost:4000/api/v1/messages/2
 
 ###
-PUT http://localhost:4000/api/v1/messages/10
+PUT http://localhost:4000/api/v1/messages/90
 content-type: application/json
 
 {
-  "categoryName": "Religión"
+  "content": "Feliz noche"
 }
 
 ###
-DELETE http://localhost:4000/api/v1/messages/88
+DELETE http://localhost:4000/api/v1/messages/90
 
-### CREAR RELACION ENTRE MENSAJES Y CATEGORIAS #####3
+### CREAR RELACION ENTRE MENSAJES Y CATEGORIAS #####
 POST http://localhost:4000/api/v1/messages/90/categories
 content-type: application/json
 
@@ -88,7 +88,22 @@ content-type: application/json
 }
 
 ### OBTENER EL MENSAJE O GRUPOS DE MENSAJES POR UNA CATEGORÍA ###
-GET http://localhost:4000/api/v1/categories/11/messages
+GET http://localhost:4000/api/v1/categories/10/messages
 
 ### OBTENER LA CATEGORÍA O GRUPO DE CATEGORÍAS POR UN MENSAJE ###
-GET http://localhost:4000/api/v1/messages/89/categories
+GET http://localhost:4000/api/v1/messages/90/categories
+
+
+################## CREAR RELACION ENTRE USUARIOS Y MENSAJES ##########
+POST http://localhost:4000/api/v1/users/14/messages
+content-type: application/json
+
+{
+  "messagesIds" : [89,90,94]
+}
+
+### OBTENER EL MENSAJE O GRUPOS DE MENSAJES POR UN USUARIO ###
+GET http://localhost:4000/api/v1/users/14/messages
+
+# ### OBTENER LA CATEGORÍA O GRUPO DE CATEGORÍAS POR UN MENSAJE ###
+# GET http://localhost:4000/api/v1/messages/90/categories

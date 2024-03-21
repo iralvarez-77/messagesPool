@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createUser, deleteUser, getAllUsers, getUser, updateUser } from "../controllers/user.controller.js";
+import { createRelation, createUser, deleteUser, getAllUsers, getMessagesByUserId, getUser, updateUser } from "../controllers/user.controller.js";
 
 const router = Router()
 
@@ -8,5 +8,7 @@ router.get('/', getAllUsers)
 router.get('/:userId', getUser)
 router.put('/:userId', updateUser)
 router.delete('/:userId', deleteUser)
+router.get('/:userId/messages', getMessagesByUserId)
+router.post('/:userId/messages', createRelation)
 
 export default router

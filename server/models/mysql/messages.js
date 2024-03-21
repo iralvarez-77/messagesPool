@@ -58,7 +58,7 @@ export class MessageModel {
 
 		} catch (error) {
 			console.log('👀 👉🏽 ~  error:', error);
-			if ( error.code === 'ER_DUP_ENTRY') return responseFn(error.message, 400)
+			if ( error.code === 'ER_DUP_ENTRY') return responseFn(error.message, 409)
 			return responseFn(error.message, 500)
 		}
 	}
