@@ -10,18 +10,17 @@ export class MessageModel {
 	static async getAllMessages({ page, limit }) {
 		try {
 			connection = databaseConnection.getConnection();
-			
 			const offset = getOffSet(page, limit)
 
 			const [messages] = await connection.query(
-				'SELECT * FROM messages LIMIT ?,?;',
+				'SELECT * FROM messages LIMIT ?,?',
 				[offset, limit]
 			);
+			if (messages.length === 0) throw new Error();
 
 			const [result] = await connection.query(
 				'SELECT COUNT(*) AS total FROM messages'
 			);
-
 			const totalPages = getTotalPages(result[0].total, limit)
 
 			const data = {
@@ -30,11 +29,11 @@ export class MessageModel {
 					page,
 					limit,
 					totalPages,
-				},
+				}
 			};
 
-			if (messages.length === 0) throw new Error();
-			return responseFn(data, 200);
+      return responseFn(data, 200)
+
 		} catch (error) {
 			console.log('👀 👉🏽 ~  error:', error);
 			if (error.message === '') return responseFn([], 404);

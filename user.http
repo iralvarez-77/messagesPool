@@ -9,7 +9,7 @@ content-type: application/json
 }
 
 ### 
-GET http://localhost:4000/api/v1/users
+GET http://localhost:4000/api/v1/users?nunPage=1&pageSize=2
 
 
 ###
@@ -37,7 +37,7 @@ content-type: application/json
 }
 
 ###
-GET http://localhost:4000/api/v1/categories
+GET http://localhost:4000/api/v1/categories?nunPage=2&pageSize=2
 
 ###
 GET http://localhost:4000/api/v1/categories/9
@@ -69,7 +69,7 @@ GET http://localhost:4000/api/v1/messages
 
 GET http://localhost:4000/api/v1/messages?nunPage=2&pageSize=5
 ###
-GET http://localhost:4000/api/v1/messages/2
+GET http://localhost:4000/api/v1/messages/89
 
 ###
 PUT http://localhost:4000/api/v1/messages/90

@@ -1,11 +1,11 @@
 import databaseConnection from '../../config/db.config.js'
-import { responseFn } from '../../helpers/index.js'
+import { getOffSet, getTotalPages, responseFn } from '../../helpers/index.js'
 import dayjs from 'dayjs'
 
 let connection
 const date = dayjs().format()
-export class UserModel {
 
+export class UserModel {
   static async createUser ({userName, alias}) {
     try {
       connection = databaseConnection.getConnection()
@@ -26,14 +26,35 @@ export class UserModel {
     }
   }
 
-  static async getAllUsers () {
+  static async getAllUsers ({page, limit}) {
     try {
+
       connection = databaseConnection.getConnection()
+      const offset = getOffSet(page,limit)
+
       const [ users ] = await connection.query(
-        'SELECT * FROM users;'
+        'SELECT * FROM users LIMIT ?,?',
+        [offset, limit]
       )
       if (users.length === 0) throw new Error()
-      return responseFn(users, 200)
+      
+      const [result] = await connection.query(
+        'SELECT COUNT(*) AS total FROM users'
+      )
+
+      const totalPages = getTotalPages(result[0].total, limit)
+
+      const data = {
+        users,
+        pagination:{
+          page,
+          limit,
+          totalPages
+        }
+      }
+
+
+      return responseFn(data, 200)
     } catch (error) {
       console.log('👀 👉🏽 ~  error:', error)
       if (error.code === "") return responseFn([], 404)

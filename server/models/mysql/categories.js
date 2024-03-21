@@ -1,5 +1,5 @@
 import databaseConnection from "../../config/db.config.js"
-import {responseFn} from '../../helpers/index.js'
+import {getOffSet, getTotalPages, responseFn} from '../../helpers/index.js'
 import dayjs from "dayjs"
 
 let connection
@@ -24,14 +24,30 @@ export class CategoryModel {
       return responseFn(error.message, 500)
     }
   }
-  static async getAllCategories(){
+  static async getAllCategories({page, limit}){
     try {
       connection = databaseConnection.getConnection()
+      const offset = getOffSet(page, limit)
       const [categories] = await connection.query(
-        'SELECT * FROM categories;',
+        'SELECT * FROM categories LIMIT ?,?',
+        [offset, limit]
       )
       if (categories.length === 0) throw new Error()
-      return responseFn(categories, 200)
+      
+      const [result] = await connection.query(
+        'SELECT COUNT(*) AS total FROM categories'
+      )
+
+      const totalPages = getTotalPages(result[0].total, limit)
+      const data = {
+        categories,
+        pagination: {
+          page,
+          limit,
+          totalPages
+        }
+      }
+      return responseFn(data, 200)
     } catch (error) {
       console.log('👀 👉🏽 ~  error:', error)
       if (error.message === "") return responseFn([], 404)

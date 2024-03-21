@@ -1,32 +1,35 @@
 import { UserModel } from "../models/mysql/users.js";
 import { UserMessagesModel } from "../models/mysql/users_messages.js";
+import { stringToNumber } from '../helpers/index.js';
+
 
 export const createUser = async (req, res) => {
-  const {data, statusCode} = await UserModel.createUser(req.body)
-  res.status(statusCode).json(data)
+  const newUser = await UserModel.createUser(req.body)
+  res.status(newUser.statusCode).json(newUser)
 }
 
-export const getAllUsers = async (_req, res) => {
-  const {data, statusCode} = await UserModel.getAllUsers()
-  res.status(statusCode).json(data)
+export const getAllUsers = async (req, res) => {
+	const query = stringToNumber(req.query);
+  const users = await UserModel.getAllUsers(query)
+  res.status(users.statusCode).json(users)
 }
 
 export const getUser = async (req, res) => {
-  const {data, statusCode} = await UserModel.getUser(req.params.userId)
-  res.status(statusCode).json(data)
+  const user = await UserModel.getUser(req.params.userId)
+  res.status(user.statusCode).json(user)
 }
 
 export const updateUser = async (req, res) => {
-  const {data, statusCode} = await UserModel.updateUser(
+  const updatedUser = await UserModel.updateUser(
     req.params.userId,
     req.body
   )
-  res.status(statusCode).json(data)
+  res.status(updatedUser.statusCode).json(updatedUser)
 }
 
 export const deleteUser  = async (req,res) => {
-  const {data, statusCode} = await UserModel.deleteUser(req.params.userId)
-  res.status(statusCode).json(data)
+  const deletedUser = await UserModel.deleteUser(req.params.userId)
+  res.status(deletedUser.statusCode).json(deletedUser)
 }
 
 export const createRelation = async (req, res) => {
