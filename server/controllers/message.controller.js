@@ -1,10 +1,10 @@
 import { MessageModel } from '../models/mysql/messages.js';
 import { CategoriesMessagesModel } from '../models/mysql/categories_messages.js';
+import { stringToNumber } from '../common/index.js';
 
 export const getAllMessages = async (req, res) => {
-	
-
-	const { data, statusCode } = await MessageModel.getAllMessages(req.query);
+	const query = stringToNumber(req.query)
+	const { data, statusCode } = await MessageModel.getAllMessages(query);
 	res.status(statusCode).json(data);
 };
 

@@ -7,10 +7,7 @@ let connection;
 const date = dayjs().format();
 
 export class MessageModel {
-	static async getAllMessages({ nunPage, pageSize }) {
-		const page = parseInt(nunPage);
-		const limit = parseInt(pageSize);
-
+	static async getAllMessages({ page, limit }) {
 		try {
 			const offset = (page - 1) * limit;
 			connection = databaseConnection.getConnection();

@@ -9,3 +9,17 @@ export const responseFn = (data , code) => ({
     'Access-Control-Allow-Methods': '*',
   },
 })
+
+export const getTotalPages = async () => {
+
+}
+
+export const stringToNumber =  ({nunPage, pageSize}) => {
+  const page = parseInt(nunPage)
+  const limit = parseInt(pageSize)
+
+  return {
+    page,
+    limit
+  }
+}
