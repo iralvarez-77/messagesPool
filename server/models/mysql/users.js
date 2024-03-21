@@ -1,5 +1,5 @@
 import databaseConnection from '../../config/db.config.js'
-import { responseFn } from '../../common/index.js'
+import { responseFn } from '../../helpers/index.js'
 import dayjs from 'dayjs'
 
 let connection

@@ -1,3 +1,4 @@
+
 export const responseFn = (data , code) => ({
   statusCode: code ? code : 200,
   data: data ? data : '',
@@ -10,10 +11,6 @@ export const responseFn = (data , code) => ({
   },
 })
 
-export const getTotalPages = async () => {
-
-}
-
 export const stringToNumber =  ({nunPage, pageSize}) => {
   const page = parseInt(nunPage)
   const limit = parseInt(pageSize)
@@ -22,4 +19,12 @@ export const stringToNumber =  ({nunPage, pageSize}) => {
     page,
     limit
   }
+}
+
+export const getTotalPages = (totalRows, limit) => {
+  return Math.ceil(totalRows / limit);
+}
+
+export const getOffSet = (page, limit) => {
+  return (page - 1) * limit;
 }

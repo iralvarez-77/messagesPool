@@ -1,4 +1,4 @@
-import { responseFn } from '../../common/index.js';
+import { responseFn, getTotalPages, getOffSet} from '../../helpers/index.js';
 import databaseConnection from '../../config/db.config.js';
 import dayjs from 'dayjs';
 
@@ -9,8 +9,9 @@ const date = dayjs().format();
 export class MessageModel {
 	static async getAllMessages({ page, limit }) {
 		try {
-			const offset = (page - 1) * limit;
 			connection = databaseConnection.getConnection();
+			
+			const offset = getOffSet(page, limit)
 
 			const [messages] = await connection.query(
 				'SELECT * FROM messages LIMIT ?,?;',
@@ -18,21 +19,19 @@ export class MessageModel {
 			);
 
 			const [result] = await connection.query(
-				'SELECT COUNT(*) AS total FROM messages  ',
-				[]
+				'SELECT COUNT(*) AS total FROM messages'
 			);
 
-			const totalRows = result[0].total;
-			const totalPages = Math.ceil(totalRows / limit);
+			const totalPages = getTotalPages(result[0].total, limit)
 
 			const data = {
 				messages,
 				pagination: {
 					page,
 					limit,
-					totalPages
-				}
-			}
+					totalPages,
+				},
+			};
 
 			if (messages.length === 0) throw new Error();
 			return responseFn(data, 200);

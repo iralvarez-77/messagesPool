@@ -1,5 +1,5 @@
 import databaseConnection from '../../config/db.config.js';
-import { responseFn } from '../../common/index.js';
+import { responseFn } from '../../helpers/index.js';
 
 let connection;
 export class CategoriesMessagesModel {
@@ -36,35 +36,35 @@ export class CategoriesMessagesModel {
           FROM categories c 
           INNER JOIN categories_messages cm ON c.categoryId = cm.categoryID
           INNER JOIN messages m ON cm.messageID = m.messageId
-          WHERE c.categoryId = ?` ,
+          WHERE c.categoryId = ?`,
 				[categoryId]
 			);
-      if (messages.length === 0) throw new Error()
-      return responseFn(messages, 200)
+			if (messages.length === 0) throw new Error();
+			return responseFn(messages, 200);
 		} catch (error) {
 			console.log('👀 👉🏽 ~  error:', error);
-      if (error.message === "") return responseFn([], 404)
-      return responseFn(error.message, 500)
+			if (error.message === '') return responseFn([], 404);
+			return responseFn(error.message, 500);
 		}
 	}
 
-  static async getCategoriesByMessageId (messageId) {
-    try {
-      connection = databaseConnection.getConnection()
-      const [categories] = await connection.query(
-        `SELECT m.messageId, categoryName, content 
+	static async getCategoriesByMessageId(messageId) {
+		try {
+			connection = databaseConnection.getConnection();
+			const [categories] = await connection.query(
+				`SELECT m.messageId, categoryName, content 
           FROM categories c
           INNER JOIN categories_messages cm ON c.categoryId = cm.categoryID
           INNER JOIN messages m ON cm.messageID = m.messageId
           WHERE m.messageId = ?`,
-        [messageId]
-      )
-      if (categories.length === 0) throw new Error()
-      return responseFn(categories, 200)
-    } catch (error) {
-      console.log('👀 👉🏽 ~  error:', error)
-      if(error.message === "") return responseFn([], 404)
-      responseFn(error.message, 500)
-    }
-  }
+				[messageId]
+			);
+			if (categories.length === 0) throw new Error();
+			return responseFn(categories, 200);
+		} catch (error) {
+			console.log('👀 👉🏽 ~  error:', error);
+			if (error.message === '') return responseFn([], 404);
+			responseFn(error.message, 500);
+		}
+	}
 }

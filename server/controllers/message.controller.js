@@ -1,9 +1,9 @@
 import { MessageModel } from '../models/mysql/messages.js';
 import { CategoriesMessagesModel } from '../models/mysql/categories_messages.js';
-import { stringToNumber } from '../common/index.js';
+import { stringToNumber } from '../helpers/index.js';
 
 export const getAllMessages = async (req, res) => {
-	const query = stringToNumber(req.query)
+	const query = stringToNumber(req.query);
 	const { data, statusCode } = await MessageModel.getAllMessages(query);
 	res.status(statusCode).json(data);
 };
@@ -16,10 +16,8 @@ export const getMessageById = async (req, res) => {
 };
 
 export const createMessage = async (req, res) => {
-		const data = await MessageModel.createMessage(
-			req.body.content
-		);
-		res.status(data.statusCode).json(data);
+	const data = await MessageModel.createMessage(req.body.content);
+	res.status(data.statusCode).json(data);
 };
 
 export const updateMessage = async (req, res) => {
@@ -37,16 +35,16 @@ export const deleteMessage = async (req, res) => {
 	res.status(statusCode).json(data);
 };
 
-export const createRelation = async ( req, res ) => {
-  const {data, statusCode} = await CategoriesMessagesModel.createRelation(
-    req.params.messageId,
-    req.body.categoriesIds)
-  res.status(statusCode).json(data)
-}
+export const createRelation = async (req, res) => {
+	const { data, statusCode } = await CategoriesMessagesModel.createRelation(
+		req.params.messageId,
+		req.body.categoriesIds
+	);
+	res.status(statusCode).json(data);
+};
 
 export const getCategoriesByMessageId = async (req, res) => {
-	const { data, statusCode } =  await CategoriesMessagesModel.getCategoriesByMessageId(
-		req.params.messageId,
-	)
-	res.status(statusCode).json(data)
-}
+	const { data, statusCode } =
+		await CategoriesMessagesModel.getCategoriesByMessageId(req.params.messageId);
+	res.status(statusCode).json(data);
+};
