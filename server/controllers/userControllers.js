@@ -1,5 +1,5 @@
 import { UserModel } from "../models/mysql/users.js";
-import { UserMessagesModel } from "../models/mysql/users_messages.js";
+import { UserMessagesModel } from "../models/mysql/usersMessages.js";
 import { stringToNumber } from '../helpers/index.js';
 
 

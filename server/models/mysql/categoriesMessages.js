@@ -1,4 +1,4 @@
-import databaseConnection from '../../config/db.config.js';
+import databaseConnection from '../../services/mysql2/configDev.js';
 import { responseFn } from '../../helpers/index.js';
 
 let connection;

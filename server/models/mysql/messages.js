@@ -1,5 +1,5 @@
-import { responseFn, getTotalPages, getOffSet} from '../../helpers/index.js';
-import databaseConnection from '../../config/db.config.js';
+import { responseFn, getTotalPages, getOffSet } from '../../helpers/index.js';
+import databaseConnection from '../../services/mysql2/configDev.js';
 import dayjs from 'dayjs';
 
 let connection;
@@ -10,7 +10,7 @@ export class MessageModel {
 	static async getAllMessages({ page, limit }) {
 		try {
 			connection = databaseConnection.getConnection();
-			const offset = getOffSet(page, limit)
+			const offset = getOffSet(page, limit);
 
 			const [messages] = await connection.query(
 				'SELECT * FROM messages LIMIT ?,?',
@@ -21,7 +21,7 @@ export class MessageModel {
 			const [result] = await connection.query(
 				'SELECT COUNT(*) AS total FROM messages'
 			);
-			const totalPages = getTotalPages(result[0].total, limit)
+			const totalPages = getTotalPages(result[0].total, limit);
 
 			const data = {
 				messages,
@@ -29,11 +29,10 @@ export class MessageModel {
 					page,
 					limit,
 					totalPages,
-				}
+				},
 			};
 
-      return responseFn(data, 200)
-
+			return responseFn(data, 200);
 		} catch (error) {
 			console.log('👀 👉🏽 ~  error:', error);
 			if (error.message === '') return responseFn([], 404);

@@ -1,7 +1,7 @@
 import express from 'express';
-import v1messageRoute from './routes/message.route.js';
-import v1userRoute from './routes/user.route.js';
-import v1categoryRoute from './routes/category.route.js';
+import v1messageRoute from './routes/messageRoutes.js';
+import v1userRoute from './routes/userRoutes.js';
+import v1categoryRoute from './routes/categoryRoutes.js';
 
 const app = express();
 
