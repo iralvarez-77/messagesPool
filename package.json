@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "dev": "NODE_ENV=dev node --watch --env-file=.env ./server/app.js",
-    "test": "vitest --globals"
+    "test": "vitest --globals",
+    "coverage": "vitest run --coverage"
   },
   "keywords": [],
   "author": "",
@@ -17,6 +18,7 @@
     "mysql2": "3.9.2"
   },
   "devDependencies": {
+    "@vitest/coverage-v8": "^1.4.0",
     "vitest": "1.4.0"
   }
 }

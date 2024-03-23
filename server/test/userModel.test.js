@@ -1,20 +1,10 @@
-
-
 vi.mock('../models/mysql/users.js');
 vi.mock('../services/mysql2/configDev.js')
-vi.mock('mysql2/promise')
+// vi.mock('mysql2/promise')
 
 import { UserModel } from '../models/mysql/users.js';
 import mysql from 'mysql2/promise';
 import databaseConnection from '../services/mysql2/configDev.js';
-
-
-
-// console.log('👀 👉🏽 ~  mysql:', mysql.createConnection)
-// console.log('👀 👉🏽 ~  databaseConnection:', databaseConnection.getConnection())
-
-
-
 
 describe('USERS', () => {
 
