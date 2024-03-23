@@ -2,14 +2,12 @@ import dataBaseConnection from '../../services/mysql2/configDev.js';
 import { getOffSet, getTotalPages, responseFn } from '../../helpers/index.js';
 import dayjs from 'dayjs';
 
-let connection;
 const date = dayjs().format();
 
 export class UserModel {
 	static async createUser({ userName, alias }) {
 		try {
-			connection = dataBaseConnection.getConnection();
-			const [result] = await connection.query(
+			const result  = await dataBaseConnection.query(
 				'INSERT INTO users(userName, alias, createdAt) VALUES(?,?,?);',
 				[userName, alias, date]
 			);
@@ -60,8 +58,7 @@ export class UserModel {
 
 	static async getUser(userId) {
 		try {
-			connection = dataBaseConnection.getConnection();
-			const [user] = await connection.query(
+			const user = await dataBaseConnection.query(
 				'SELECT * FROM users WHERE userId = ?;',
 				[userId]
 			);
@@ -76,8 +73,7 @@ export class UserModel {
 
 	static async updateUser(userId, { userName, alias }) {
 		try {
-			connection = dataBaseConnection.getConnection();
-			const [result] = await connection.query(
+			const result = await dataBaseConnection.query(
 				'UPDATE users SET userName = ?, alias = ?, updatedAt = ?  WHERE userId = ?;',
 				[userName, alias, date, userId]
 			);
@@ -100,8 +96,7 @@ export class UserModel {
 
 	static async deleteUser(userId) {
 		try {
-			connection = dataBaseConnection.getConnection();
-			const [result] = await connection.query(
+			const result = await dataBaseConnection.query(
 				'DELETE FROM users WHERE userId = ?;',
 				[userId]
 			);

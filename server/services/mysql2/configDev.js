@@ -4,7 +4,7 @@ import { config } from '../../helpers/index.js';
 
 class MySQLDatabase {
   //constructor debe ser privado 
-  constructor() {
+  _constructor() {
     //propiedad privada y debe ser estática
     this._connection = null
   }
@@ -46,4 +46,5 @@ class MySQLDatabase {
 
 }
 
-export default new MySQLDatabase()
+const dataBaseConnection =  new MySQLDatabase()
+export default dataBaseConnection
