@@ -30,11 +30,12 @@ export class UserModel {
 		try {
 			connection = databaseConnection.getConnection();
 			const offset = getOffSet(page, limit);
-
+			
 			const [users] = await connection.query('SELECT * FROM users LIMIT ?,?', [
 				offset,
 				limit,
 			]);
+			
 			if (users.length === 0) throw new Error();
 
 			const [result] = await connection.query(
