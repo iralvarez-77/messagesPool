@@ -1,46 +1,49 @@
 //patrón de diseño singleton , estableciendo una única conexión a la base de datos
-import mysql from 'mysql2/promise';
+import { createConnection } from 'mysql2/promise';
+import { config } from '../../helpers/index.js';
 
-class DataBaseConnection {
-	constructor() { 
-		this.connection = null;
-		this._createConnection() //encapsulando la lógica de conexión
-	}
-	//_método privado
-	async  _createConnection() {
-		try {
-			this.connection = await mysql.createConnection({
-				host: process.env.HOST_DB,
-				port: process.env.PORT_MYSQL,
-				password: process.env.PASSWORD_DB,
-				user: process.env.USER_DB,
-				database: process.env.NAME_DB,
-			});
+class MySQLDatabase {
+  //constructor debe ser privado 
+  constructor() {
+    //propiedad privada y debe ser estática
+    this._connection = null
+  }
+  //método público y estático
+  async connect() {
+    try {
+      if(!this._connection) {
+        this._connection = await createConnection(config)
+        console.log('Connected to the database');
+      }
+      return this._connection
+      
+    } catch (error) {
+      console.log('👀 👉🏽 ~  errorConnectClass:', error)
+    }
+  }
 
-			console.log('Connected to the database');
-			// console.log(this.connection);
+  async disconnect() {
+    try {
+      if(this._connection) {
+        await this._connection.end()
+        console.log('Connection closed');
+      }
+    } catch (error) {
+      console.log('👀 👉🏽 ~  errorDisconnectClass:', error)
+    }
+  }
 
-		} catch (error) {
-			console.error('Error connecting to the database:', error);
-			throw new Error('Error en la conexión a la base de datos');
-		}
-	}
+  async query(sql, values = []) {
+    const connection = await this.connect();
+    try {
+      const [rows, fields] = await connection.query(sql, values)
+      return rows
+    } catch (error) {
+      console.log('👀 👉🏽 ~  errorQueryClass:', error)
+			throw error
+    }
+  }
 
-	getConnection() {
-		if (!this.connection) {
-			this.connection = new DataBaseConnection()
-		}
-		return this.connection;
-	}
-
-	async closeConnection() {
-    if (this.connection) {
-      await this.connection.end();
-      console.log('Connection closed');
-		
-    }	
-	}
 }
 
-const databaseConnection = new DataBaseConnection();
-export default databaseConnection 
+export default new MySQLDatabase()

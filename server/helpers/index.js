@@ -1,4 +1,12 @@
 
+export const config = {
+	host: process.env.HOST_DB,
+	port: process.env.PORT_MYSQL,
+	password: process.env.PASSWORD_DB,
+	user: process.env.USER_DB,
+	database: process.env.NAME_DB,
+}
+
 export const responseFn = (data , code) => ({
   statusCode: code ? code : 200,
   data: data ? data : {},

@@ -1,4 +1,4 @@
-import databaseConnection from '../../services/mysql2/configDev.js';
+import dataBaseConnection from '../../services/mysql2/configDev.js';
 import { getOffSet, getTotalPages, responseFn } from '../../helpers/index.js';
 import dayjs from 'dayjs';
 
@@ -8,7 +8,7 @@ const date = dayjs().format();
 export class UserModel {
 	static async createUser({ userName, alias }) {
 		try {
-			connection = databaseConnection.getConnection();
+			connection = dataBaseConnection.getConnection();
 			const [result] = await connection.query(
 				'INSERT INTO users(userName, alias, createdAt) VALUES(?,?,?);',
 				[userName, alias, date]
@@ -28,17 +28,14 @@ export class UserModel {
 
 	static async getAllUsers({ page, limit }) {
 		try {
-			connection = databaseConnection.getConnection();
-			const offset = getOffSet(page, limit);
-			
-			const [users] = await connection.query('SELECT * FROM users LIMIT ?,?', [
-				offset,
+			const users = await dataBaseConnection.query('SELECT * FROM users LIMIT ?,?', [
+				getOffSet(page, limit),
 				limit,
 			]);
-			
+
 			if (users.length === 0) throw new Error();
 
-			const [result] = await connection.query(
+			const result = await dataBaseConnection.query(
 				'SELECT COUNT(*) AS total FROM users'
 			);
 
@@ -56,14 +53,14 @@ export class UserModel {
 			return responseFn(data, 200);
 		} catch (error) {
 			console.log('👀 👉🏽 ~  error:', error);
-			if (error.code === '') return responseFn([], 404);
+			if (error.message === "") return responseFn([], 404);
 			return responseFn(error.message, 500);
 		}
-	}
+	} 
 
 	static async getUser(userId) {
 		try {
-			connection = databaseConnection.getConnection();
+			connection = dataBaseConnection.getConnection();
 			const [user] = await connection.query(
 				'SELECT * FROM users WHERE userId = ?;',
 				[userId]
@@ -79,7 +76,7 @@ export class UserModel {
 
 	static async updateUser(userId, { userName, alias }) {
 		try {
-			connection = databaseConnection.getConnection();
+			connection = dataBaseConnection.getConnection();
 			const [result] = await connection.query(
 				'UPDATE users SET userName = ?, alias = ?, updatedAt = ?  WHERE userId = ?;',
 				[userName, alias, date, userId]
@@ -103,7 +100,7 @@ export class UserModel {
 
 	static async deleteUser(userId) {
 		try {
-			connection = databaseConnection.getConnection();
+			connection = dataBaseConnection.getConnection();
 			const [result] = await connection.query(
 				'DELETE FROM users WHERE userId = ?;',
 				[userId]
