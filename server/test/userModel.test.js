@@ -1,29 +1,27 @@
-/**
- * Pruebas Unitarias: Estas pruebas se centran en probar unidades individuales de código de manera aislada, lo que significa que se prueban las funciones o métodos de la clase por separado, sin depender de otras partes del sistema. Se utilizan mocks o stubs para simular el comportamiento de las dependencias externas. Las pruebas unitarias son útiles para garantizar que cada función o método funcione correctamente según su especificación.
- *
- */
+
 
 vi.mock('../models/mysql/users.js');
 vi.mock('../services/mysql2/configDev.js')
-
-// vi.mock('../services/mysql2/configDev.js', () => {
-// 	return {
-
-// 	}
-// });
-
+vi.mock('mysql2/promise')
 
 import { UserModel } from '../models/mysql/users.js';
+import mysql from 'mysql2/promise';
 import databaseConnection from '../services/mysql2/configDev.js';
-console.log('👀 👉🏽 ~  databaseConnection:', databaseConnection.connection)
 
 
 
-afterEach(() => {
-	vi.restoreAllMocks();
-});
+// console.log('👀 👉🏽 ~  mysql:', mysql.createConnection)
+// console.log('👀 👉🏽 ~  databaseConnection:', databaseConnection.getConnection())
+
+
+
 
 describe('USERS', () => {
+
+	afterEach(() => {
+		vi.restoreAllMocks();
+	});
+
 	it('should create new user', () => {});
 	// it('should create new user', () => {
 	// })
@@ -44,10 +42,3 @@ describe('USERS', () => {
 //   expect(mock).toHaveBeenCalledTimes(3)
 // })
 
-const obj = {
-  myMethod: () => {}
-};
-
-const espia = vi.spyOn(obj, 'myMethod');
-console.log('👀 👉🏽 ~  espia:', espia.mockImplementation(() => 'resultado simulado'))
-// console.log('👀 👉🏽 ~  obj:', obj)
