@@ -27,9 +27,9 @@ class DataBaseConnection {
 	}
 
 	getConnection() {
-		if (!this.connection) 
-			throw new Error('La conexión a la base de datos no ha sido establecida.');
-		
+		if (!this.connection) {
+			this.connection = new DataBaseConnection()
+		}
 		return this.connection;
 	}
 

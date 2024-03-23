@@ -15,10 +15,8 @@ vi.mock('../services/mysql2/configDev.js')
 
 import { UserModel } from '../models/mysql/users.js';
 import databaseConnection from '../services/mysql2/configDev.js';
-console.log('👀 👉🏽 ~  databaseConnection:', databaseConnection.getConnection())
+console.log('👀 👉🏽 ~  databaseConnection:', databaseConnection.connection)
 
-const data =  databaseConnection.getConnection()
-console.log('👀 👉🏽 ~  data:', data.query())
 
 
 afterEach(() => {
@@ -45,3 +43,11 @@ describe('USERS', () => {
 //   expect(mock()).toEqual(messages.items[messages.items.length - 1])
 //   expect(mock).toHaveBeenCalledTimes(3)
 // })
+
+const obj = {
+  myMethod: () => {}
+};
+
+const espia = vi.spyOn(obj, 'myMethod');
+console.log('👀 👉🏽 ~  espia:', espia.mockImplementation(() => 'resultado simulado'))
+// console.log('👀 👉🏽 ~  obj:', obj)
