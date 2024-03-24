@@ -19,4 +19,3 @@ app.listen(PORT, () => {
 });
 
 await dataBaseConnection.connect();
-// await dataBaseConnection.disconnect();

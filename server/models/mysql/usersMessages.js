@@ -1,4 +1,4 @@
-import databaseConnection from '../../services/mysql2/configDev.js';
+import instanceDB from '../../services/mysql2/configDev.js';
 import { responseFn } from '../../helpers/index.js';
 
 let connection;
@@ -7,7 +7,7 @@ export class UserMessagesModel {
 	static async createRelation(userId, messagesIds) {
 		try {
 			let data = [];
-			connection = databaseConnection.getConnection();
+			connection = instanceDB.getConnection();
 			for (const messageId of messagesIds) {
 				const [result] = await connection.query(
 					'INSERT INTO users_messages(userId, messageId) VALUES(?,?)',
@@ -31,7 +31,7 @@ export class UserMessagesModel {
 	}
 	static async getMessagesByUserId(userId) {
 		try {
-			connection = databaseConnection.getConnection();
+			connection = instanceDB.getConnection();
 			const [messages] = await connection.query(
 				`SELECT u.userId, userName, content
           FROM messages m

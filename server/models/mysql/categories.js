@@ -1,4 +1,4 @@
-import databaseConnection from '../../services/mysql2/configDev.js';
+import instanceDB from '../../services/mysql2/configDev.js';
 import { getOffSet, getTotalPages, responseFn } from '../../helpers/index.js';
 import dayjs from 'dayjs';
 
@@ -8,7 +8,7 @@ const date = dayjs().format();
 export class CategoryModel {
 	static async createCategory({ categoryName }) {
 		try {
-			connection = databaseConnection.getConnection();
+			connection = instanceDB.getConnection();
 			const [result] = await connection.query(
 				'INSERT INTO categories(categoryName, createdAt) VALUES(?,?);',
 				[categoryName, date]
@@ -26,7 +26,7 @@ export class CategoryModel {
 	}
 	static async getAllCategories({ page, limit }) {
 		try {
-			connection = databaseConnection.getConnection();
+			connection = instanceDB.getConnection();
 			const offset = getOffSet(page, limit);
 			const [categories] = await connection.query(
 				'SELECT * FROM categories LIMIT ?,?',
@@ -56,7 +56,7 @@ export class CategoryModel {
 	}
 	static async getCategory(categoryId) {
 		try {
-			connection = databaseConnection.getConnection();
+			connection = instanceDB.getConnection();
 			const [category] = await connection.query(
 				'SELECT * FROM categories WHERE categoryId = ?;',
 				[categoryId]
@@ -72,7 +72,7 @@ export class CategoryModel {
 	}
 	static async updateCategory(categoryId, { categoryName }) {
 		try {
-			connection = databaseConnection.getConnection();
+			connection = instanceDB.getConnection();
 			const [result] = await connection.query(
 				'UPDATE categories SET categoryName = ?, updatedAt = ?  WHERE categoryId = ?;',
 				[categoryName, date, categoryId]
@@ -93,7 +93,7 @@ export class CategoryModel {
 	}
 	static async deleteCategory(categoryId) {
 		try {
-			connection = databaseConnection.getConnection();
+			connection = instanceDB.getConnection();
 			const [result] = await connection.query(
 				'DELETE FROM categories WHERE categoryId = ?',
 				[categoryId]

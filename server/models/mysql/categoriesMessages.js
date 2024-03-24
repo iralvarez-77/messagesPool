@@ -1,4 +1,4 @@
-import databaseConnection from '../../services/mysql2/configDev.js';
+import instanceDB from '../../services/mysql2/configDev.js';
 import { responseFn } from '../../helpers/index.js';
 
 let connection;
@@ -6,7 +6,7 @@ export class CategoriesMessagesModel {
 	static async createRelation(messageId, categoriesIds) {
 		try {
 			let data = [];
-			connection = await databaseConnection.getConnection();
+			connection = await instanceDB.getConnection();
 			for (const categoryId of categoriesIds) {
 				const [result] = await connection.query(
 					'INSERT INTO categories_messages(categoryID, messageID) VALUES(?,?);',
@@ -30,7 +30,7 @@ export class CategoriesMessagesModel {
 
 	static async getMessagesByCategoryId(categoryId) {
 		try {
-			connection = databaseConnection.getConnection();
+			connection = instanceDB.getConnection();
 			const [messages] = await connection.query(
 				`SELECT  c.categoryId, categoryName, content 
           FROM categories c 
@@ -50,7 +50,7 @@ export class CategoriesMessagesModel {
 
 	static async getCategoriesByMessageId(messageId) {
 		try {
-			connection = databaseConnection.getConnection();
+			connection = instanceDB.getConnection();
 			const [categories] = await connection.query(
 				`SELECT m.messageId, categoryName, content 
           FROM categories c
