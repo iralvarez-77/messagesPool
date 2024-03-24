@@ -1,15 +1,26 @@
+@port = 4000
+@hostname = localhost
+@apiV1 = api/v1
+@host = {{hostname}}:{{port}}
+@contentType = application/json
+@users = users
+@categories = categories
+@messages = messages
+
+@nunPage = nunPage
+@pageSize = pageSize
 
 ###################### USERS ####################
-POST http://localhost:4000/api/v1/users
-content-type: application/json
+POST http://{{hostname}}:{{port}}/{{apiV1}}/{{users}}
+content-type: {{contentType}}
 
 {
-  "userName": "Rut",
-  "alias": "bestie"
+  "userName": "Luciano",
+  "alias": "lucho"
 }
 
 ### 
-GET http://localhost:4000/api/v1/users?nunPage=1&pageSize=2
+GET http://{{hostname}}:{{port}}/{{apiV1}}/{{users}}?{{nunPage}}=1&{{pageSize}}=5
 
 
 ###
