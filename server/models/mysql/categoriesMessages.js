@@ -1,14 +1,12 @@
 import instanceDB from '../../services/mysql2/configDev.js';
 import { responseFn } from '../../helpers/index.js';
 
-let connection;
 export class CategoriesMessagesModel {
 	static async createRelation(messageId, categoriesIds) {
 		try {
 			let data = [];
-			connection = await instanceDB.getConnection();
 			for (const categoryId of categoriesIds) {
-				const [result] = await connection.query(
+				const result = await instanceDB.query(
 					'INSERT INTO categories_messages(categoryID, messageID) VALUES(?,?);',
 					[categoryId, messageId]
 				);
@@ -30,8 +28,7 @@ export class CategoriesMessagesModel {
 
 	static async getMessagesByCategoryId(categoryId) {
 		try {
-			connection = instanceDB.getConnection();
-			const [messages] = await connection.query(
+			const messages = await instanceDB.query(
 				`SELECT  c.categoryId, categoryName, content 
           FROM categories c 
           INNER JOIN categories_messages cm ON c.categoryId = cm.categoryID
@@ -50,8 +47,7 @@ export class CategoriesMessagesModel {
 
 	static async getCategoriesByMessageId(messageId) {
 		try {
-			connection = instanceDB.getConnection();
-			const [categories] = await connection.query(
+			const categories = await instanceDB.query(
 				`SELECT m.messageId, categoryName, content 
           FROM categories c
           INNER JOIN categories_messages cm ON c.categoryId = cm.categoryID

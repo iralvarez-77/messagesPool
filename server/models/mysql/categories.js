@@ -2,14 +2,12 @@ import instanceDB from '../../services/mysql2/configDev.js';
 import { getOffSet, getTotalPages, responseFn } from '../../helpers/index.js';
 import dayjs from 'dayjs';
 
-let connection;
 const date = dayjs().format();
 
 export class CategoryModel {
 	static async createCategory({ categoryName }) {
 		try {
-			connection = instanceDB.getConnection();
-			const [result] = await connection.query(
+			const result = await instanceDB.query(
 				'INSERT INTO categories(categoryName, createdAt) VALUES(?,?);',
 				[categoryName, date]
 			);
@@ -26,15 +24,13 @@ export class CategoryModel {
 	}
 	static async getAllCategories({ page, limit }) {
 		try {
-			connection = instanceDB.getConnection();
-			const offset = getOffSet(page, limit);
-			const [categories] = await connection.query(
+			const categories = await instanceDB.query(
 				'SELECT * FROM categories LIMIT ?,?',
-				[offset, limit]
+				[getOffSet(page, limit), limit]
 			);
 			if (categories.length === 0) throw new Error();
 
-			const [result] = await connection.query(
+			const result = await instanceDB.query(
 				'SELECT COUNT(*) AS total FROM categories'
 			);
 
@@ -56,8 +52,7 @@ export class CategoryModel {
 	}
 	static async getCategory(categoryId) {
 		try {
-			connection = instanceDB.getConnection();
-			const [category] = await connection.query(
+			const category = await instanceDB.query(
 				'SELECT * FROM categories WHERE categoryId = ?;',
 				[categoryId]
 			);
@@ -72,8 +67,7 @@ export class CategoryModel {
 	}
 	static async updateCategory(categoryId, { categoryName }) {
 		try {
-			connection = instanceDB.getConnection();
-			const [result] = await connection.query(
+			const result = await instanceDB.query(
 				'UPDATE categories SET categoryName = ?, updatedAt = ?  WHERE categoryId = ?;',
 				[categoryName, date, categoryId]
 			);
@@ -93,8 +87,7 @@ export class CategoryModel {
 	}
 	static async deleteCategory(categoryId) {
 		try {
-			connection = instanceDB.getConnection();
-			const [result] = await connection.query(
+			const result = await instanceDB.query(
 				'DELETE FROM categories WHERE categoryId = ?',
 				[categoryId]
 			);

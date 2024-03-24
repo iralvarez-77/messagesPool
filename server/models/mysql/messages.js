@@ -2,23 +2,19 @@ import { responseFn, getTotalPages, getOffSet } from '../../helpers/index.js';
 import instanceDB from '../../services/mysql2/configDev.js';
 import dayjs from 'dayjs';
 
-let connection;
 
 const date = dayjs().format();
 
 export class MessageModel {
 	static async getAllMessages({ page, limit }) {
 		try {
-			connection = instanceDB.getConnection();
-			const offset = getOffSet(page, limit);
-
-			const [messages] = await connection.query(
+			const messages = await instanceDB.query(
 				'SELECT * FROM messages LIMIT ?,?',
-				[offset, limit]
+				[getOffSet(page, limit), limit]
 			);
 			if (messages.length === 0) throw new Error();
 
-			const [result] = await connection.query(
+			const result = await connection.query(
 				'SELECT COUNT(*) AS total FROM messages'
 			);
 			const totalPages = getTotalPages(result[0].total, limit);
@@ -42,8 +38,7 @@ export class MessageModel {
 
 	static async getMessageByID(messageId) {
 		try {
-			connection = instanceDB.getConnection();
-			const [message] = await connection.query(
+			const message = await instanceDB.query(
 				'SELECT * FROM messages WHERE messageId = ?;',
 				[messageId]
 			);
@@ -60,8 +55,7 @@ export class MessageModel {
 
 	static async createMessage(content) {
 		try {
-			connection = instanceDB.getConnection();
-			const [result] = await connection.query(
+			const result = await instanceDB.query(
 				'INSERT INTO messages(content, createdAt) VALUES (?, ?);',
 				[content, date]
 			);
@@ -81,8 +75,7 @@ export class MessageModel {
 
 	static async updateMessage(id, content) {
 		try {
-			connection = await instanceDB.getConnection();
-			const [result] = await connection.query(
+			const result = await instanceDB.query(
 				'UPDATE messages SET content = ?, updatedAt = ? WHERE messageId = ?;',
 				[content, date, id]
 			);
@@ -103,8 +96,7 @@ export class MessageModel {
 
 	static async deleteMessage(messageId) {
 		try {
-			connection = instanceDB.getConnection();
-			const [result] = await connection.query(
+			const result = await instanceDB.query(
 				'DELETE FROM messages WHERE messageId = ?;',
 				[messageId]
 			);
