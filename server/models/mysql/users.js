@@ -1,5 +1,4 @@
-import dataBaseConnection from '../../services/mysql2/configDev.js';
-console.log('👀 👉🏽 ~  dataBaseConnection:', dataBaseConnection.connection)
+import instanceDB from '../../services/mysql2/configDev.js';
 import { getOffSet, getTotalPages, responseFn } from '../../helpers/index.js';
 import dayjs from 'dayjs';
 
@@ -8,7 +7,7 @@ const date = dayjs().format();
 export class UserModel {
 	static async createUser({ userName, alias }) {
 		try {
-			const result  = await dataBaseConnection.query(
+			const result  = await instanceDB.query(
 				'INSERT INTO users(userName, alias, createdAt) VALUES(?,?,?);',
 				[userName, alias, date]
 			);
@@ -27,14 +26,14 @@ export class UserModel {
 
 	static async getAllUsers({ page, limit }) {
 		try {
-			const users = await dataBaseConnection.query('SELECT * FROM users LIMIT ?,?', [
+			const users = await instanceDB.query('SELECT * FROM users LIMIT ?,?', [
 				getOffSet(page, limit),
 				limit,
 			]);
 
 			if (users.length === 0) throw new Error();
 
-			const result = await dataBaseConnection.query(
+			const result = await instanceDB.query(
 				'SELECT COUNT(*) AS total FROM users'
 			);
 
@@ -59,7 +58,7 @@ export class UserModel {
 
 	static async getUser(userId) {
 		try {
-			const user = await dataBaseConnection.query(
+			const user = await instanceDB.query(
 				'SELECT * FROM users WHERE userId = ?;',
 				[userId]
 			);
@@ -74,7 +73,7 @@ export class UserModel {
 
 	static async updateUser(userId, { userName, alias }) {
 		try {
-			const result = await dataBaseConnection.query(
+			const result = await instanceDB.query(
 				'UPDATE users SET userName = ?, alias = ?, updatedAt = ?  WHERE userId = ?;',
 				[userName, alias, date, userId]
 			);
@@ -97,7 +96,7 @@ export class UserModel {
 
 	static async deleteUser(userId) {
 		try {
-			const result = await dataBaseConnection.query(
+			const result = await instanceDB.query(
 				'DELETE FROM users WHERE userId = ?;',
 				[userId]
 			);

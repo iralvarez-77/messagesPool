@@ -20,7 +20,7 @@ content-type: {{contentType}}
 }
 
 ### 
-GET http://{{hostname}}:{{port}}/{{apiV1}}/{{users}}?{{nunPage}}=1&{{pageSize}}=7
+GET http://{{hostname}}:{{port}}/{{apiV1}}/{{users}}?{{nunPage}}=1&{{pageSize}}=2
 
 
 ###

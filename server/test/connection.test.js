@@ -7,17 +7,19 @@ vi.mock('mysql2/promise');
 
 import mysql from 'mysql2/promise';
 import dataBaseConnection from '../services/mysql2/configDev.js';
+import instanceDB from '../services/mysql2/configDev.js';
 
 describe('DataBaseConnection', () => {
 	afterEach(async () => {
 		vi.restoreAllMocks();
 	});
 
-	// it('should have a single instance', async () => {
-	// 	const connection1 = await dataBaseConnection.connect();
-	// 	const connection2 = await dataBaseConnection.connect();
-	// 	expect(connection1).toStrictEqual(connection2);
-	// });
+	it('should have a single instance', async () => {
+		const instance1 = dataBaseConnection
+		const instance2 = instanceDB
+		expect(instance1).toBe(instance2)
+		expect(instance1 === instance2).toBe(true)
+	});
 
 	it('should conect to the database', async () => {
 		const mockValue = {};

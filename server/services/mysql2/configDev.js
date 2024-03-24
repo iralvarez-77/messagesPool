@@ -45,5 +45,4 @@ class MySQLDatabase {
 
 }
 
-const dataBaseConnection =  new MySQLDatabase()
-export default dataBaseConnection
+export default new MySQLDatabase()

@@ -1,5 +1,5 @@
 import { responseFn, getTotalPages, getOffSet } from '../../helpers/index.js';
-import databaseConnection from '../../services/mysql2/configDev.js';
+import instanceDB from '../../services/mysql2/configDev.js';
 import dayjs from 'dayjs';
 
 let connection;
@@ -9,7 +9,7 @@ const date = dayjs().format();
 export class MessageModel {
 	static async getAllMessages({ page, limit }) {
 		try {
-			connection = databaseConnection.getConnection();
+			connection = instanceDB.getConnection();
 			const offset = getOffSet(page, limit);
 
 			const [messages] = await connection.query(
@@ -42,7 +42,7 @@ export class MessageModel {
 
 	static async getMessageByID(messageId) {
 		try {
-			connection = databaseConnection.getConnection();
+			connection = instanceDB.getConnection();
 			const [message] = await connection.query(
 				'SELECT * FROM messages WHERE messageId = ?;',
 				[messageId]
@@ -60,7 +60,7 @@ export class MessageModel {
 
 	static async createMessage(content) {
 		try {
-			connection = databaseConnection.getConnection();
+			connection = instanceDB.getConnection();
 			const [result] = await connection.query(
 				'INSERT INTO messages(content, createdAt) VALUES (?, ?);',
 				[content, date]
@@ -81,7 +81,7 @@ export class MessageModel {
 
 	static async updateMessage(id, content) {
 		try {
-			connection = await databaseConnection.getConnection();
+			connection = await instanceDB.getConnection();
 			const [result] = await connection.query(
 				'UPDATE messages SET content = ?, updatedAt = ? WHERE messageId = ?;',
 				[content, date, id]
@@ -103,7 +103,7 @@ export class MessageModel {
 
 	static async deleteMessage(messageId) {
 		try {
-			connection = databaseConnection.getConnection();
+			connection = instanceDB.getConnection();
 			const [result] = await connection.query(
 				'DELETE FROM messages WHERE messageId = ?;',
 				[messageId]
