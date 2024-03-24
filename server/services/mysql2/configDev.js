@@ -1,21 +1,20 @@
 //patrón de diseño singleton , estableciendo una única conexión a la base de datos
-import { createConnection } from 'mysql2/promise';
+import mysql from 'mysql2/promise';
 import { config } from '../../helpers/index.js';
 
 class MySQLDatabase {
-  //constructor debe ser privado 
-  _constructor() {
-    //propiedad privada y debe ser estática
-    this._connection = null
+
+  constructor() {
+    this.connection = null
   }
-  //método público y estático
+
   async connect() {
     try {
-      if(!this._connection) {
-        this._connection = await createConnection(config)
+      if(!this.connection) {
+        this.connection = await mysql.createConnection(config)
         console.log('Connected to the database');
       }
-      return this._connection
+      return this.connection
       
     } catch (error) {
       console.log('👀 👉🏽 ~  errorConnectClass:', error)
@@ -24,10 +23,10 @@ class MySQLDatabase {
 
   async disconnect() {
     try {
-      if(this._connection) {
-        await this._connection.end()
+      if(this.connection) {
+        await this.connection.end()
         console.log('Connection closed');
-      }
+      } 
     } catch (error) {
       console.log('👀 👉🏽 ~  errorDisconnectClass:', error)
     }

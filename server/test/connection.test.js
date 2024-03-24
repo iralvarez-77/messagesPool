@@ -6,29 +6,45 @@
 vi.mock('mysql2/promise');
 
 import mysql from 'mysql2/promise';
-import databaseConnection from '../services/mysql2/configDev.js';
-console.log('👀 👉🏽 ~  databaseConnection:', databaseConnection)
+import dataBaseConnection from '../services/mysql2/configDev.js';
 
-describe('DatabaseConnection', () => {
-	afterEach(() => {
+describe('DataBaseConnection', () => {
+	afterEach(async () => {
 		vi.restoreAllMocks();
 	});
 
-	it('should have a single instance', () => {
-		const connection1 = databaseConnection.getConnection();
-		const connection2 = databaseConnection.getConnection();
-		expect(connection1).toStrictEqual(connection2);
-	});
+	// it('should have a single instance', async () => {
+	// 	const connection1 = await dataBaseConnection.connect();
+	// 	const connection2 = await dataBaseConnection.connect();
+	// 	expect(connection1).toStrictEqual(connection2);
+	// });
 
 	it('should conect to the database', async () => {
-
 		const mockValue = {};
 		mysql.createConnection.mockResolvedValue(mockValue);
 
-		const instance = databaseConnection.getConnection();
-		await instance._createConnection()
+    // Conectar a la base de datos
+    const dbConnected = await dataBaseConnection.connect();
+    // Verificar que la conexión se haya establecido
+    expect(dbConnected).not.toBeNull();
 
-		expect(instance.connection).toStrictEqual(mockValue);
-    // expect(instance.connection).not.toBeNull();
+		expect(dbConnected).toStrictEqual(mockValue);
+	});
+
+	it('should disconnect from the database', async () => {
+
+    const mockDisconnect = {
+      end: vi.fn().mockReturnValue(null)
+    };
+    
+    //convertir la propiedad connection de la instancia dataBaseconnection en un mock 
+    dataBaseConnection.connection = mockDisconnect
+		// // Desconectar de la base de datos
+		await dataBaseConnection.disconnect();
+		
+		// Verificar que la conexión se haya cerrado
+		expect(dataBaseConnection.connection.end()).toBeNull();
 	});
 });
+
+

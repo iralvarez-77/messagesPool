@@ -1,4 +1,5 @@
 import dataBaseConnection from '../../services/mysql2/configDev.js';
+console.log('👀 👉🏽 ~  dataBaseConnection:', dataBaseConnection.connection)
 import { getOffSet, getTotalPages, responseFn } from '../../helpers/index.js';
 import dayjs from 'dayjs';
 
