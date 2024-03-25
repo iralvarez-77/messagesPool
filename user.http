@@ -24,7 +24,7 @@ GET http://{{hostname}}:{{port}}/{{apiV1}}/{{users}}?{{nunPage}}=1&{{pageSize}}=
 
 
 ###
-GET http://{{hostname}}:{{port}}/{{apiV1}}/{{users}}/11
+GET http://{{hostname}}:{{port}}/{{apiV1}}/{{users}}/2
 
 ###
 PUT http://{{hostname}}:{{port}}/{{apiV1}}/{{users}}/9

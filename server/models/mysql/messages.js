@@ -14,7 +14,7 @@ export class MessageModel {
 			);
 			if (messages.length === 0) throw new Error();
 
-			const result = await connection.query(
+			const result = await instanceDB.query(
 				'SELECT COUNT(*) AS total FROM messages'
 			);
 			const totalPages = getTotalPages(result[0].total, limit);
