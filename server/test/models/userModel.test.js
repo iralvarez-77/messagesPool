@@ -101,7 +101,7 @@ describe('USERS', () => {
 						
 		});
 		it('should return status code 404 when users not exists', async () => {
-			// console.log(await instanceDB.query());
+		
 			instanceDB.query.mockResolvedValueOnce([])
 			const res = await UserModel.getAllUsers(queries)
 			console.log('👀 👉🏽 ~  res:', res)
@@ -109,8 +109,15 @@ describe('USERS', () => {
 			expect(instanceDB.query).toHaveBeenCalledTimes(1)
 			expect(res.statusCode).toBe(404)
 		})
-		it('', () => {
-			
+
+		it('should return an error when parameter is missing',async () => {
+			instanceDB.query.mockRejectedValue(new Error('parameter is not defined') )
+			// console.log(await instanceDB.query());
+			const res = await UserModel.getAllUsers(queries.limit)
+			console.log('👀 👉🏽 ~  res:', res)
+			expect(instanceDB.query).toHaveBeenCalledTimes(1)
+			expect(res.statusCode).toBe(500)
+
 		})
 	});
 });
