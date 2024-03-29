@@ -44,3 +44,9 @@ export const getCategoriesByMessageId = async (req, res) => {
 		await CategoriesMessagesModel.getCategoriesByMessageId(req.params.messageId);
 	res.status(statusCode).json(data);
 };
+
+export const sendMessage = async(req,res) => {
+	const sentMessage = await MessageModel.sendMessage(req.body)
+	console.log('👀 👉🏽 ~  sentMessage:', sentMessage)
+	res.status(200).json(sentMessage)
+}

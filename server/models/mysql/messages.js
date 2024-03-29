@@ -109,4 +109,14 @@ export class MessageModel {
 			return responseFn(error.message, 500);
 		}
 	}
+
+	static async sendMessage ({payload}) {
+		try {
+			console.log(payload);
+		} catch (error) {
+			console.log('👀 👉🏽 ~  error:', error)
+			
+		}
+
+	}
 }

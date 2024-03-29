@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { createMessage, deleteMessage, getAllMessages, getMessageById, updateMessage,createRelation, getCategoriesByMessageId } from '../controllers/messageControllers.js';
+import { createMessage, deleteMessage, getAllMessages, getMessageById, updateMessage,createRelation, getCategoriesByMessageId, sendMessage } from '../controllers/messageControllers.js';
 
 const router = Router();
 
@@ -10,5 +10,6 @@ router.put('/:messageId', updateMessage);
 router.delete('/:messageId', deleteMessage);
 router.get('/:messageId/categories', getCategoriesByMessageId);
 router.post('/:messageId/categories', createRelation)
+router.post('/sendMessage', sendMessage)
 
 export default router;
