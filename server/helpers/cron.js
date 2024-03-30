@@ -1,6 +1,6 @@
 import cron from 'node-cron';
 
-const schedule = cron.schedule('*/10 * * * * *', async () => {
+const schedule = cron.schedule('* * * * */24', async () => {
   try {
     const id = 89
     const getMessage = await fetch(`${process.env.LOCAL_HOST}/messages/${id}`)
