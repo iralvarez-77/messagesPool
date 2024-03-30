@@ -114,7 +114,6 @@ describe('USERS', () => {
 			instanceDB.query.mockRejectedValue(new Error('parameter is not defined') )
 			// console.log(await instanceDB.query());
 			const res = await UserModel.getAllUsers(queries.limit)
-			console.log('👀 👉🏽 ~  res:', res)
 			expect(instanceDB.query).toHaveBeenCalledTimes(1)
 			expect(res.statusCode).toBe(500)
 
