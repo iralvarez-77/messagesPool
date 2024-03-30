@@ -1,5 +1,6 @@
 import { responseFn, getTotalPages, getOffSet } from '../../helpers/index.js';
 import instanceDB from '../../services/mysql2/configDev.js';
+import twilio from 'twilio';
 import dayjs from 'dayjs';
 
 
@@ -110,13 +111,26 @@ export class MessageModel {
 		}
 	}
 
-	static async sendMessage ({payload}) {
+	static async sendMessage({ payload }) {
 		try {
-			console.log(payload);
+		
+			const client = twilio(process.env.ACCOUNT_SID, process.env.TOKEN_TWILIO);
+	
+			const { sid } = await client.messages
+				.create({
+					body: payload,
+					from: process.env.NUMBER_FROM,
+					to: process.env.NUMBER_TO,
+				})
+	
+			const data = {
+				sid,
+				message: 'Message is sent'
+			}
+			return responseFn(data, 200)
+			
 		} catch (error) {
 			console.log('👀 👉🏽 ~  error:', error)
-			
 		}
-
 	}
 }

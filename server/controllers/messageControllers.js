@@ -10,7 +10,7 @@ export const getAllMessages = async (req, res) => {
 
 export const getMessageById = async (req, res) => {
 	const message = await MessageModel.getMessageByID(req.params.messageId);
-	res.status(statusCode).json(message);
+	res.status(message.statusCode).json(message);
 };
 
 export const createMessage = async (req, res) => {
@@ -46,7 +46,8 @@ export const getCategoriesByMessageId = async (req, res) => {
 };
 
 export const sendMessage = async(req,res) => {
-	const sentMessage = await MessageModel.sendMessage(req.body)
-	console.log('👀 👉🏽 ~  sentMessage:', sentMessage)
-	res.status(200).json(sentMessage)
+	const {data, statusCode} = await MessageModel.sendMessage(req.body)
+	console.log('👀 👉🏽 ~  data:', data)
+	res.status(statusCode).json(data)
 }
+
