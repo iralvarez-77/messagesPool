@@ -111,14 +111,14 @@ export class MessageModel {
 		}
 	}
 
-	static async sendMessage({ payload }) {
+	static async sendMessage(content) {
 		try {
 		
 			const client = twilio(process.env.ACCOUNT_SID, process.env.TOKEN_TWILIO);
 	
 			const { sid } = await client.messages
 				.create({
-					body: payload,
+					body: content,
 					from: process.env.NUMBER_FROM,
 					to: process.env.NUMBER_TO,
 				})
