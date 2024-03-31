@@ -5,17 +5,19 @@ import dayjs from 'dayjs';
 const date = dayjs().format();
 
 export class UserModel {
-	static async createUser({ userName, alias }) {
+	static async createUser({ userName, email, password }) {
 		try {
 			const result  = await instanceDB.query(
-				'INSERT INTO users(userName, alias, createdAt) VALUES(?,?,?);',
-				[userName, alias, date]
+				'INSERT INTO users(userName, email, password) VALUES(?,?,?);',
+				[userName, email, password]
 			);
 			const data = {
 				userId: result.insertId,
 				userName,
-				alias,
+				email,
+				password
 			};
+
 			return responseFn(data, 201);
 		} catch (error) {
 			console.log('👀 👉🏽 ~  error:', error);
@@ -71,28 +73,28 @@ export class UserModel {
 		}
 	}
 
-	static async updateUser(userId, { userName, alias }) {
-		try {
-			const result = await instanceDB.query(
-				'UPDATE users SET userName = ?, alias = ?, updatedAt = ?  WHERE userId = ?;',
-				[userName, alias, date, userId]
-			);
+	// static async updateUser(userId, { userName, alias }) {
+	// 	try {
+	// 		const result = await instanceDB.query(
+	// 			'UPDATE users SET userName = ?, alias = ?, updatedAt = ?  WHERE userId = ?;',
+	// 			[userName, alias, date, userId]
+	// 		);
 
-			if (result.affectedRows === 0) throw new Error();
+	// 		if (result.affectedRows === 0) throw new Error();
 
-			const data = {
-				userId,
-				userName,
-				alias,
-			};
+	// 		const data = {
+	// 			userId,
+	// 			userName,
+	// 			alias,
+	// 		};
 
-			return responseFn(data, 200);
-		} catch (error) {
-			console.log('👀 👉🏽 ~  error:', error);
-			if (error.message === '') return responseFn('User not found', 404);
-			return responseFn(error.message, 500);
-		}
-	}
+	// 		return responseFn(data, 200);
+	// 	} catch (error) {
+	// 		console.log('👀 👉🏽 ~  error:', error);
+	// 		if (error.message === '') return responseFn('User not found', 404);
+	// 		return responseFn(error.message, 500);
+	// 	}
+	// }
 
 	static async deleteUser(userId) {
 		try {

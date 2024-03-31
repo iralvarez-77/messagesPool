@@ -10,13 +10,21 @@
 @nunPage = nunPage
 @pageSize = pageSize
 
+
+###
+POST http://{{hostname}}:{{port}}/{{apiV1}}/register
+
+###
+POST http://{{hostname}}:{{port}}/{{apiV1}}/login
+
 ###################### USERS ####################
 POST http://{{hostname}}:{{port}}/{{apiV1}}/{{users}}
 content-type: {{contentType}}
 
 {
   "userName": "Luciano",
-  "alias": "lucho"
+  "email": "lucho@lucho",
+  "password": "1234"
 }
 
 ### 
@@ -24,7 +32,7 @@ GET http://{{hostname}}:{{port}}/{{apiV1}}/{{users}}?{{nunPage}}=1&{{pageSize}}=
 
 
 ###
-GET http://{{hostname}}:{{port}}/{{apiV1}}/{{users}}/2
+GET http://{{hostname}}:{{port}}/{{apiV1}}/{{users}}/21
 # Authorization: Bearer 'kgfkgjdñfkg'
 
 ###
@@ -37,7 +45,7 @@ content-type: {{contentType}}
 }
 
 ###
-DELETE http://{{hostname}}:{{port}}/{{apiV1}}/{{users}}/12
+DELETE http://{{hostname}}:{{port}}/{{apiV1}}/{{users}}/21
 
 ###################### CATEGORIES ####################
 
