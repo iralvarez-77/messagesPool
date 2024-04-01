@@ -1,9 +1,9 @@
 import { Router } from "express";
-import { createRelation, createUser, deleteUser, getAllUsers, getMessagesByUserId, getUser, updateUser } from "../controllers/userControllers.js";
+import { createRelation, deleteUser, getAllUsers, getMessagesByUserId, getUser, updateUser } from "../controllers/userControllers.js";
 
 const router = Router()
 
-router.post('/', createUser)
+// router.post('/', createUser)
 router.get('/', getAllUsers)
 router.get('/:userId', getUser)
 router.put('/:userId', updateUser)

@@ -13,12 +13,6 @@
 
 ###
 POST http://{{hostname}}:{{port}}/{{apiV1}}/register
-
-###
-POST http://{{hostname}}:{{port}}/{{apiV1}}/login
-
-###################### USERS ####################
-POST http://{{hostname}}:{{port}}/{{apiV1}}/{{users}}
 content-type: {{contentType}}
 
 {
@@ -26,6 +20,14 @@ content-type: {{contentType}}
   "email": "lucho@lucho",
   "password": "1234"
 }
+
+###
+POST http://{{hostname}}:{{port}}/{{apiV1}}/login
+
+###################### USERS ####################
+# POST http://{{hostname}}:{{port}}/{{apiV1}}/{{users}}
+
+
 
 ### 
 GET http://{{hostname}}:{{port}}/{{apiV1}}/{{users}}?{{nunPage}}=1&{{pageSize}}=2
@@ -45,7 +47,7 @@ content-type: {{contentType}}
 }
 
 ###
-DELETE http://{{hostname}}:{{port}}/{{apiV1}}/{{users}}/21
+DELETE http://{{hostname}}:{{port}}/{{apiV1}}/{{users}}/29
 
 ###################### CATEGORIES ####################
 

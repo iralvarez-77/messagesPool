@@ -1,11 +1,12 @@
 import { AuthModel } from "../models/mysql/auth.js"; 
+import { UserModel } from "../models/mysql/users.js";
 
-export const register = async (req,_res) => {
-  const {body} = req.body
-  const data = await await AuthModel.register(body)
-  console.log('👀 👉🏽 ~  data:', data)
-  console.log('register');
+export const register = async (req, res) => {
+  const newUser = await AuthModel.register(req.body)
+  console.log('👀 👉🏽 ~  newUser:', newUser)
+  // res.status(newUser.statusCode).json(newUser)
 }
+
 
 export const login = (req,res) => {
   console.log('LOGIN');

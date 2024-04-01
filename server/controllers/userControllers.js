@@ -3,10 +3,10 @@ import { UserMessagesModel } from "../models/mysql/usersMessages.js";
 import { stringToNumber } from '../helpers/index.js';
 
 
-export const createUser = async (req, res) => {
-  const newUser = await UserModel.createUser(req.body)
-  res.status(newUser.statusCode).json(newUser)
-}
+// export const createUser = async (req, res) => {
+//   const newUser = await UserModel.createUser(req.body)
+//   res.status(newUser.statusCode).json(newUser)
+// }
 
 export const getAllUsers = async (req, res) => {
 	const query = stringToNumber(req.query);
