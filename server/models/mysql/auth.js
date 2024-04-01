@@ -1,10 +1,18 @@
 // import { UserModel } from "../models/mysql/users.js";
 import { UserModel } from "./users.js";
+import bcrypt from bcrypt
 
 export class AuthModel {
   static async register(body) {
-    const {data}  = await UserModel.createUser(body)
-    return data
+    try {
+      const { data: user }  = await UserModel.createUser(body)
+      
+
+      return user
+      
+    } catch (error) {
+      console.log('👀 👉🏽 ~  error:', error)
+    }
   }
 
   login() {

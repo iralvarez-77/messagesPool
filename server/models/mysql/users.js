@@ -7,15 +7,16 @@ const date = dayjs().format();
 export class UserModel {
 	static async createUser({ userName, email, password }) {
 		try {
-			const result  = await instanceDB.query(
+			const result = await instanceDB.query(
 				'INSERT INTO users(userName, email, password) VALUES(?,?,?);',
 				[userName, email, password]
 			);
+
 			const data = {
 				userId: result.insertId,
 				userName,
 				email,
-				password
+				password,
 			};
 
 			return responseFn(data, 201);
@@ -35,9 +36,7 @@ export class UserModel {
 
 			if (users.length === 0) throw new Error();
 
-			const result = await instanceDB.query(
-				'SELECT COUNT(*) AS total FROM users'
-			);
+			const result = await instanceDB.query('SELECT COUNT(*) AS total FROM users');
 
 			const totalPages = getTotalPages(result[0].total, limit);
 
@@ -53,10 +52,10 @@ export class UserModel {
 			return responseFn(data, 200);
 		} catch (error) {
 			console.log('👀 👉🏽 ~  error:', error);
-			if (error.message === "") return responseFn([], 404);
+			if (error.message === '') return responseFn([], 404);
 			return responseFn(error.message, 500);
 		}
-	} 
+	}
 
 	static async getUser(userId) {
 		try {
