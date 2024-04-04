@@ -1,22 +1,29 @@
 import instanceDB from '../../services/mysql2/configDev.js';
 import { getOffSet, getTotalPages, responseFn } from '../../helpers/index.js';
-import dayjs from 'dayjs';
+import jwt from 'jsonwebtoken';
+import bcrytp from 'bcrypt';
 
-const date = dayjs().format();
+// const date = dayjs().format();
 
 export class UserModel {
 	static async createUser({ userName, email, password }) {
 		try {
+			
+			const hash = await bcrytp.hash(password, 10);
+
 			const result = await instanceDB.query(
 				'INSERT INTO users(userName, email, password) VALUES(?,?,?);',
-				[userName, email, password]
+				[userName, email, hash]
 			);
+			const userId = result.insertId
+
+			const token = await jwt.sign({userId}, process.env.PRIVATE_KEY);
+			console.log('👀 👉🏽 ~  token:', token)
 
 			const data = {
-				userId: result.insertId,
+				userId,
 				userName,
 				email,
-				password,
 			};
 
 			return responseFn(data, 201);

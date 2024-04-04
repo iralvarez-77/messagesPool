@@ -47,7 +47,7 @@ content-type: {{contentType}}
 }
 
 ###
-DELETE http://{{hostname}}:{{port}}/{{apiV1}}/{{users}}/30
+DELETE http://{{hostname}}:{{port}}/{{apiV1}}/{{users}}/34
 
 ###################### CATEGORIES ####################
 
