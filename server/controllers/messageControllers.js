@@ -46,8 +46,9 @@ export const getCategoriesByMessageId = async (req, res) => {
 };
 
 export const sendMessage = async(req,res) => {
-	const {data, statusCode} = await MessageModel.sendMessage(req.body)
-	console.log('👀 👉🏽 ~  data:', data)
+	console.log(req.body);
+	const {statusCode, data} = await MessageModel.sendMessage(req.body)
+	console.log('👀 👉🏽 ~  dataController:', data)
 	res.status(statusCode).json(data)
 }
 

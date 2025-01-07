@@ -15,9 +15,10 @@ export class UserModel {
 				'INSERT INTO users(userName, email, password) VALUES(?,?,?);',
 				[userName, email, hash]
 			);
+
 			const userId = result.insertId
 
-			const token = await jwt.sign({userId}, process.env.PRIVATE_KEY);
+			const token = await jwt.sign( {userId} , process.env.PRIVATE_KEY );
 			console.log('👀 👉🏽 ~  token:', token)
 
 			const data = {

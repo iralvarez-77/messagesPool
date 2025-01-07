@@ -4,7 +4,7 @@ import v1userRoute from './routes/userRoutes.js';
 import v1categoryRoute from './routes/categoryRoutes.js';
 import v1AuthRoute from './routes/authRoutes.js'
 import instanceDB from './services/mysql2/configDev.js';
-import cron from './helpers/cron.js'
+// import cron from './helpers/cron.js'
 
 const app = express();
 app.disable('x-powered-by');
@@ -20,5 +20,5 @@ app.listen(PORT, () => {
   console.log(`server is running on ${PORT}`);
 });
 
-cron.start()
+// cron.start()
 await instanceDB.connect();

@@ -127,6 +127,7 @@ export class MessageModel {
 				sid,
 				message: 'Message is sent'
 			}
+
 			return responseFn(data, 200)
 			
 		} catch (error) {
