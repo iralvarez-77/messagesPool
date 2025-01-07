@@ -16,21 +16,22 @@ POST http://{{hostname}}:{{port}}/{{apiV1}}/register
 content-type: {{contentType}}
 
 {
-  "userName": "Luciano",
-  "email": "lucho@lucho",
-  "password": "1234"
+  "userName": "Ira",
+  "email": "ira@gmail.com",
+  "password": "4567"
 }
 
 ###
 POST http://{{hostname}}:{{port}}/{{apiV1}}/login
 
 ###################### USERS ####################
-# POST http://{{hostname}}:{{port}}/{{apiV1}}/{{users}}
+# 
+POST http://{{hostname}}:{{port}}/{{apiV1}}/{{users}}
 
 
 
 ### 
-GET http://{{hostname}}:{{port}}/{{apiV1}}/{{users}}?{{nunPage}}=1&{{pageSize}}=2
+GET http://{{hostname}}:{{port}}/{{apiV1}}/{{users}}?{{nunPage}}=1&{{pageSize}}=5
 
 
 ###
@@ -81,7 +82,7 @@ POST http://{{hostname}}:{{port}}/{{apiV1}}/{{messages}}/sendMessage
 content-type: application/json
 
 {
-  "payload": "esto es una prueba para la ruta"
+  "content": "probando...consist-atomicconsist-atomic"
 }
 
 ###
