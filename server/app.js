@@ -9,13 +9,13 @@ import instanceDB from './services/mysql2/configDev.js';
 const app = express();
 app.disable('x-powered-by');
 
-const PORT = process.env.PORT || 3001;
 app.use(express.json());
 app.use('/api/v1/messages', v1messageRoute);
 app.use('/api/v1/users', v1userRoute);
 app.use('/api/v1/categories', v1categoryRoute);
 app.use('/api/v1', v1AuthRoute)
 
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`server is running on ${PORT}`);
 });
