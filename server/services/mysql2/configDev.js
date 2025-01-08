@@ -35,7 +35,7 @@ class MySQLDatabase {
   async query(sql, values = []) {
     const connection = await this.connect();
     try {
-      const [rows, fields] = await connection.query(sql, values)
+      const [rows, _fields] = await connection.query(sql, values)
       return rows
     } catch (error) {
       console.log('👀 👉🏽 ~  errorQueryClass:', error)

@@ -141,3 +141,5 @@ GET http://localhost:4000/api/v1/users/14/messages
 
 # ### OBTENER LA CATEGORÍA O GRUPO DE CATEGORÍAS POR UN MENSAJE ###
 # GET http://localhost:4000/api/v1/messages/90/categories
+
+
