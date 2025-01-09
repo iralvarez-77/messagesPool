@@ -16,8 +16,8 @@ POST http://{{hostname}}:{{port}}/{{apiV1}}/register
 content-type: {{contentType}}
 
 {
-  "userName": "Ira",
-  "email": "ira@gmail.com",
+  "userName": "Alan",
+  "email": "alanG@gmail.com",
   "password": "4567"
 }
 
@@ -31,7 +31,7 @@ POST http://{{hostname}}:{{port}}/{{apiV1}}/{{users}}
 
 
 ### 
-GET http://{{hostname}}:{{port}}/{{apiV1}}/{{users}}?{{nunPage}}=1&{{pageSize}}=5
+GET http://{{hostname}}:{{port}}/{{apiV1}}/{{users}}?{{nunPage}}=1&{{pageSize}}=10
 
 
 ###

@@ -41,8 +41,9 @@ class MySQLDatabase {
       return rows
     } catch (error) {
       console.log('👀 👉🏽 ~  errorQueryClass:', error)
-			// throw error
       if (error.code === 'ER_DUP_ENTRY') return responseFn('El correo electrónico ya está registrado.', 409);
+      return responseFn(error.message, 500);
+
     }
   }
 

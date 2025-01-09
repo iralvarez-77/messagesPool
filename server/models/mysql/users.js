@@ -14,23 +14,24 @@ export class UserModel {
 				[userName, email, hash]
 			);
 			console.log('👀 👉🏽 ~  result:', result)
+			if (result.statusCode === 409) return responseFn(result) 
 
-			// const userId = result.insertId
+			const userId = result.insertId
 
-			// const token = await jwt.sign( {userId} , process.env.PRIVATE_KEY );
-			// console.log('👀 👉🏽 ~  token:', token)
+			const token = await jwt.sign( {userId} , process.env.PRIVATE_KEY );
+			console.log('👀 👉🏽 ~  token:', token)
 
-			// const data = {
-			// 	userId,
-			// 	userName,
-			// 	email,
-			// };
+			const data = {
+				userId,
+				userName,
+				email,
+			};
 
-			// return responseFn(data);
+			return responseFn(data, 201);
 		} catch (error) {
 			console.log('👀 👉🏽 ~  errorDetectado:', error);
-			if (error.code === 'ER_DUP_ENTRY') return responseFn('El correo electrónico ya está registrado.', 409);
 			return responseFn(error.message, 500);
+			// if (error.code === 'ER_DUP_ENTRY') return responseFn('El correo electrónico ya está registrado.', 409);
 		}
 	}
 

@@ -7,12 +7,12 @@ export class AuthModel {
 
       const { data: user }  = await UserModel.createUser(body)
       console.log('👀 👉🏽 ~  user:', user)
-      // return responseFn(user, 201)
+      return responseFn(user, 201)
       
     } catch (error) {
       console.log('👀 👉🏽 ~  errorErrorrrrrr:', error);
+      return responseFn(error.message, 500);
       // if (error.code === 'ER_DUP_ENTRY') return responseFn('El correo electrónico ya está registrado.', 409);
-      // return responseFn(error.message, 500);
     }
   }
 
