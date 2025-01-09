@@ -16,8 +16,8 @@ POST http://{{hostname}}:{{port}}/{{apiV1}}/register
 content-type: {{contentType}}
 
 {
-  "userName": "Alan",
-  "email": "alanG@gmail.com",
+  "userName": "fabiola",
+  "email": "fabiolaG@gmail.com",
   "password": "4567"
 }
 

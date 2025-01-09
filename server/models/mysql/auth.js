@@ -11,8 +11,11 @@ export class AuthModel {
       
     } catch (error) {
       console.log('👀 👉🏽 ~  errorErrorrrrrr:', error);
-      return responseFn(error.message, 500);
-      // if (error.code === 'ER_DUP_ENTRY') return responseFn('El correo electrónico ya está registrado.', 409);
+      if (error.code === 'ER_DUP_ENTRY') {
+        throw new Error('DUPLICATE_EMAIL');
+      }
+      throw new Error('INTERNAL_ERROR');
+      // return responseFn(error.message, 500);
     }
   }
 

@@ -14,24 +14,30 @@ export class UserModel {
 				[userName, email, hash]
 			);
 			console.log('👀 👉🏽 ~  result:', result)
-			if (result.statusCode === 409) return responseFn(result) 
-
-			const userId = result.insertId
-
-			const token = await jwt.sign( {userId} , process.env.PRIVATE_KEY );
-			console.log('👀 👉🏽 ~  token:', token)
+			// console.log('👀 👉🏽 ~  resultData:', result.data)
+			// console.log('👀 👉🏽 ~  resultStatusCode:', result.statusCode)
+			// console.log('👀 👉🏽 ~  resultado:', responseFn(result.data, result.statusCode))
+			if (!result.insertId) throw new Error("No se pudo crear el usuario."); 
+				
+				const token = await jwt.sign( {userId} , process.env.PRIVATE_KEY );
+				console.log('👀 👉🏽 ~  token:', token)
 
 			const data = {
-				userId,
+				userId: result.insertId,
 				userName,
 				email,
 			};
-
+			console.log("33")
+			
 			return responseFn(data, 201);
 		} catch (error) {
 			console.log('👀 👉🏽 ~  errorDetectado:', error);
-			return responseFn(error.message, 500);
+			if (error.code === 'ER_DUP_ENTRY') {
+				throw new Error("El correo electrónico ya está registrado aquí."); // Lanza un error específico
+			}
+			throw new Error("Error interno al crear el usuario.");
 			// if (error.code === 'ER_DUP_ENTRY') return responseFn('El correo electrónico ya está registrado.', 409);
+			// return responseFn(error.message, 500);
 		}
 	}
 
