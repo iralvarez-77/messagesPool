@@ -1,6 +1,8 @@
 //patrón de diseño singleton , estableciendo una única conexión a la base de datos
 import mysql from 'mysql2/promise';
 import { config } from '../../helpers/index.js';
+import { responseFn } from '../../helpers/index.js';
+
 
 class MySQLDatabase {
 
@@ -39,7 +41,8 @@ class MySQLDatabase {
       return rows
     } catch (error) {
       console.log('👀 👉🏽 ~  errorQueryClass:', error)
-			throw error
+			// throw error
+      if (error.code === 'ER_DUP_ENTRY') return responseFn('El correo electrónico ya está registrado.', 409);
     }
   }
 

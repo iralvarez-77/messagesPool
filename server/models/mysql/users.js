@@ -3,8 +3,6 @@ import { getOffSet, getTotalPages, responseFn } from '../../helpers/index.js';
 import jwt from 'jsonwebtoken';
 import bcrytp from 'bcrypt';
 
-// const date = dayjs().format();
-
 export class UserModel {
 	static async createUser({ userName, email, password }) {
 		try {
@@ -15,22 +13,23 @@ export class UserModel {
 				'INSERT INTO users(userName, email, password) VALUES(?,?,?);',
 				[userName, email, hash]
 			);
+			console.log('👀 👉🏽 ~  result:', result)
 
-			const userId = result.insertId
+			// const userId = result.insertId
 
-			const token = await jwt.sign( {userId} , process.env.PRIVATE_KEY );
-			console.log('👀 👉🏽 ~  token:', token)
+			// const token = await jwt.sign( {userId} , process.env.PRIVATE_KEY );
+			// console.log('👀 👉🏽 ~  token:', token)
 
-			const data = {
-				userId,
-				userName,
-				email,
-			};
+			// const data = {
+			// 	userId,
+			// 	userName,
+			// 	email,
+			// };
 
-			return responseFn(data, 201);
+			// return responseFn(data);
 		} catch (error) {
-			console.log('👀 👉🏽 ~  error:', error);
-			if (error.code === 'ER_DUP_ENTRY') return responseFn(error.message, 400);
+			console.log('👀 👉🏽 ~  errorDetectado:', error);
+			if (error.code === 'ER_DUP_ENTRY') return responseFn('El correo electrónico ya está registrado.', 409);
 			return responseFn(error.message, 500);
 		}
 	}

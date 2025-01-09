@@ -69,7 +69,7 @@ export class MessageModel {
 			return responseFn(data, 201);
 		} catch (error) {
 			console.log('👀 👉🏽 ~  error:', error);
-			if (error.code === 'ER_DUP_ENTRY') return responseFn(error.message, 409);
+			if (error.code === 'ER_DUP_ENTRY') return responseFn('El correo electrónico ya está registrado.', 409);
 			return responseFn(error.message, 500);
 		}
 	}
