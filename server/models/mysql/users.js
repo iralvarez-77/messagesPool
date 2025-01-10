@@ -1,43 +1,33 @@
 import instanceDB from '../../services/mysql2/configDev.js';
 import { getOffSet, getTotalPages, responseFn } from '../../helpers/index.js';
 import jwt from 'jsonwebtoken';
-import bcrytp from 'bcrypt';
+import bcrypt from 'bcrypt';
 
 export class UserModel {
 	static async createUser({ userName, email, password }) {
 		try {
 			
-			const hash = await bcrytp.hash(password, 10);
+			const hash = await bcrypt.hash(password, 10);
 
 			const result = await instanceDB.query(
 				'INSERT INTO users(userName, email, password) VALUES(?,?,?);',
 				[userName, email, hash]
 			);
-			console.log('👀 👉🏽 ~  result:', result)
-			// console.log('👀 👉🏽 ~  resultData:', result.data)
-			// console.log('👀 👉🏽 ~  resultStatusCode:', result.statusCode)
-			// console.log('👀 👉🏽 ~  resultado:', responseFn(result.data, result.statusCode))
-			if (!result.insertId) throw new Error("No se pudo crear el usuario."); 
+			const userId = result.insertId
 				
-				const token = await jwt.sign( {userId} , process.env.PRIVATE_KEY );
-				console.log('👀 👉🏽 ~  token:', token)
+			const token = await jwt.sign( {userId} , process.env.PRIVATE_KEY );
 
 			const data = {
-				userId: result.insertId,
+				userId,
 				userName,
 				email,
+				token
 			};
-			console.log("33")
 			
-			return responseFn(data, 201);
+			return data;
 		} catch (error) {
 			console.log('👀 👉🏽 ~  errorDetectado:', error);
-			if (error.code === 'ER_DUP_ENTRY') {
-				throw new Error("El correo electrónico ya está registrado aquí."); // Lanza un error específico
-			}
-			throw new Error("Error interno al crear el usuario.");
-			// if (error.code === 'ER_DUP_ENTRY') return responseFn('El correo electrónico ya está registrado.', 409);
-			// return responseFn(error.message, 500);
+			throw error
 		}
 	}
 
