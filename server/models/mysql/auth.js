@@ -1,4 +1,3 @@
-import { responseFn } from "../../helpers/index.js";
 import { UserModel } from "./users.js";
 
 export class AuthModel {
