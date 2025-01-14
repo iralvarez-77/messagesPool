@@ -6,10 +6,11 @@ export const register = async (req, res) => {
   try {
     await userSchema.validate(req.body)
 
-    const newUser = await AuthModel.signUp(req.body);
+    const {userId, userName, email, token} = await AuthModel.signUp(req.body);
+      res.cookie("token", token)
       res.status(201).json({
-      message: 'Usuario creado exitosamente',
-      data: newUser,
+      message: 'Usuario creado éxitosamente',
+      data: {userId, userName, email},
     });
     
   } catch (error) {

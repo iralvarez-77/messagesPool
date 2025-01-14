@@ -16,7 +16,7 @@ export class UserModel {
 			const userId = result.insertId
 				
 			const token = await jwt.sign({userId}, process.env.PRIVATE_KEY, {expiresIn: '1h'});
-
+			
 			const data = {
 				userId,
 				userName,
@@ -24,7 +24,7 @@ export class UserModel {
 				token
 			};
 			
-			return data;
+			return data
 		} catch (error) {
 			console.log('👀 👉🏽 ~  errorDetectado:', error);
 			throw error
