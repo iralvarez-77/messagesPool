@@ -15,7 +15,7 @@ export class UserModel {
 			);
 			const userId = result.insertId
 				
-			const token = await jwt.sign( {userId} , process.env.PRIVATE_KEY );
+			const token = await jwt.sign({userId}, process.env.PRIVATE_KEY, {expiresIn: '1h'});
 
 			const data = {
 				userId,

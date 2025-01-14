@@ -2,7 +2,7 @@ import { responseFn } from "../../helpers/index.js";
 import { UserModel } from "./users.js";
 
 export class AuthModel {
-  static async register(body) {
+  static async signUp(body) {
     try {
 
       const user  = await UserModel.createUser(body)
