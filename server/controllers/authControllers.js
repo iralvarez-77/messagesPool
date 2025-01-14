@@ -1,10 +1,10 @@
-import userSchema from "../../middlewares/validateUser.js";
 import * as Yup from 'yup'
+import userSchema from "../../middlewares/validateUser.js";
 import { AuthModel } from "../models/mysql/auth.js";
 
 export const register = async (req, res) => {
   try {
-    await userSchema.validate(req.body, { abortEarly: false })
+    await userSchema.validate(req.body)
 
     const newUser = await AuthModel.signUp(req.body);
       res.status(201).json({
