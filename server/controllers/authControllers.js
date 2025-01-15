@@ -28,9 +28,15 @@ export const register = async (req, res) => {
 
 
 
-export const login = (req,res) => {
-  console.log('LOGIN');
-
+export const login = async (req, res) => {
+  try {
+    const {email, password} = req.body
+    const user = await AuthModel.signIn(email,password)
+  } catch (error) {
+    console.log('👀 👉🏽 ~  error:', error)
+    // if (error === 'Usuario no encontrado') 
+    //   res.status(404).json({message: "el correo no está registrado"})
+  }
 }
 
 
