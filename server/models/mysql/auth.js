@@ -22,12 +22,12 @@ export class AuthModel {
 				[email]
       );
       console.log('👀 👉🏽 ~  userfound:', userFound)
-      if (userFound.length=== 0) throw new Error('Usuario no encontrado');
-      // if (userFound.length === 0) {
-      //   const error = new Error('Usuario no encontrado');
-      //   error.statusCode = 404;  // Código de estado 404 (Not Found)
-      //   throw error;  // Lanza el error
-      // }
+      // if ( userFound.length === 0) throw new Error('Usuario no encontrado');
+      if (userFound.length === 0) {
+        const error = new Error('User not found');
+        error.statusCode = 404;  // Código de estado 404 (Not Found)
+        throw error;  // Lanza el error
+      }
 
 
     } catch (error) {

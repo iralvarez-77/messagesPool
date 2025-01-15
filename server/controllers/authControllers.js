@@ -33,9 +33,9 @@ export const login = async (req, res) => {
     const {email, password} = req.body
     const user = await AuthModel.signIn(email,password)
   } catch (error) {
-    console.log('👀 👉🏽 ~  error:', error)
-    // if (error === 'Usuario no encontrado') 
-    //   res.status(404).json({message: "el correo no está registrado"})
+    console.log('👀 👉🏽 ~  errorLgin:', error)
+    if (error.statusCode === 404 ) 
+      res.status(404).json(error.message)
   }
 }
 
