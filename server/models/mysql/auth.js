@@ -21,7 +21,6 @@ export class AuthModel {
         'SELECT * FROM users  WHERE email = ? LIMIT 1;',
 				[email]
       );
-      console.log('👀 👉🏽 ~  userfound:', userFound)
       // if ( userFound.length === 0) throw new Error('Usuario no encontrado');
       if (userFound.length === 0) {
         const error = new Error('User not found');
@@ -29,6 +28,7 @@ export class AuthModel {
         throw error;  // Lanza el error
       }
 
+      return userFound[0]
 
     } catch (error) {
       console.log('👀 👉🏽 ~  errorUserFound:', error)

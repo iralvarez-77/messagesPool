@@ -32,6 +32,7 @@ export const login = async (req, res) => {
   try {
     const {email, password} = req.body
     const user = await AuthModel.signIn(email,password)
+    res.status(200).json(user)
   } catch (error) {
     console.log('👀 👉🏽 ~  errorLgin:', error)
     if (error.statusCode === 404 ) 
