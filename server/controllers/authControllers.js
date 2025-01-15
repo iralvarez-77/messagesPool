@@ -1,6 +1,7 @@
 import * as Yup from 'yup'
 import userSchema from "../../middlewares/validateUser.js";
 import { AuthModel } from "../models/mysql/auth.js";
+import loginSchema from "../../middlewares/validateLogin.js"
 
 export const register = async (req, res) => {
   try {
@@ -31,12 +32,20 @@ export const register = async (req, res) => {
 export const login = async (req, res) => {
   try {
     const {email, password} = req.body
+    await loginSchema.validate({email, password})
     const user = await AuthModel.signIn(email,password)
     res.status(200).json(user)
   } catch (error) {
     console.log('👀 👉🏽 ~  errorLgin:', error)
     if (error.statusCode === 404 ) 
       res.status(404).json(error.message)
+
+    if (error instanceof Yup.ValidationError) {
+      return res.status(400).json({
+        message: 'Parámetros inválidos',
+        errors: error.errors,  // Aquí se envían los mensajes personalizados
+      });
+    }
   }
 }
 
