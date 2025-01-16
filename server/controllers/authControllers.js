@@ -59,6 +59,20 @@ export const login = async (req, res) => {
   }
 }
 
+export const logOut =  (req, res) => {
+  try {
+    // authController.js
+    res.clearCookie('token', {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict'
+    })
+    res.status(200).json({ message: 'Logout successful' });
+  } catch (error) {
+    console.log('👀 👉🏽 ~  errorControllerLogOut:', error)
+  }
+};
+
 
 
 

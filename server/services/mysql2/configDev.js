@@ -42,11 +42,8 @@ class MySQLDatabase {
     } catch (error) {
       console.log('👀 👉🏽 ~  errorQueryClass:', error)
       if (error.code === 'ER_DUP_ENTRY') throw new Error('DUPLICATE_EMAIL')
-      throw error;
-
     }
   }
-
 }
 
 export default new MySQLDatabase()

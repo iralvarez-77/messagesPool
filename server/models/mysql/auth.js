@@ -54,4 +54,13 @@ export class AuthModel {
       throw error
     }
   }
+
+  static async logOut() {
+    try {
+      
+    } catch (error) {
+      console.log('👀 👉🏽 ~  errorLogOut:', error)
+      
+    }
+  }
 }
