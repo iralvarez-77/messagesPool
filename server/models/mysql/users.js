@@ -14,14 +14,11 @@ export class UserModel {
 				[userName, email, hash]
 			);
 			const userId = result.insertId
-				
-			const token = await jwt.sign({userId}, process.env.PRIVATE_KEY, {expiresIn: '1h'});
 			
 			const data = {
 				userId,
 				userName,
 				email,
-				token
 			};
 			
 			return data
