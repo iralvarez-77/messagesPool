@@ -65,12 +65,12 @@ export class UserModel {
 				[userId]
 			);
 			if (user.length === 0) throw new Error();
-			
+
 			return user[0]
 		} catch (error) {
-			console.log('👀 👉🏽 ~  error:', error);
-			if (error.message === '') return responseFn('User not found', 404);
-			return responseFn(error.message, 500);
+			console.log('👀 👉🏽 ~  errorGetUSer:', error);
+			if (error.message === '') return res.status(404).json({message: "User not found"});
+			res.status(500).json({message: "Server internal error"})
 		}
 	}
 

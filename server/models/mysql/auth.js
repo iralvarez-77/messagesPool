@@ -26,7 +26,6 @@ export class AuthModel {
         'SELECT * FROM users  WHERE email = ? LIMIT 1;',
 				[email]
       );
-      // if ( userFound.length === 0) throw new Error('Usuario no encontrado');
       if (userFound.length === 0) {
         const error = new Error('User not found');
         error.statusCode = 404;  // Código de estado 404 (Not Found)
@@ -68,7 +67,6 @@ export class AuthModel {
   try {
     const user = await UserModel.getUser(userId)
     console.log('👀 👉🏽 ~  user:', user)
-    // if(!userFond) return res.status(400).json({message: 'user not found'})
     const {password: _, ...userWithPass} = user
     return userWithPass 
   } catch (error) {
