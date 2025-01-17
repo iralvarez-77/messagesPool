@@ -65,7 +65,8 @@ export class UserModel {
 				[userId]
 			);
 			if (user.length === 0) throw new Error();
-			return responseFn(user[0], 200);
+			
+			return user[0]
 		} catch (error) {
 			console.log('👀 👉🏽 ~  error:', error);
 			if (error.message === '') return responseFn('User not found', 404);
