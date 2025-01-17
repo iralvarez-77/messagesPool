@@ -2,6 +2,7 @@ import * as Yup from 'yup'
 import userSchema from "../../middlewares/validateUser.js";
 import { AuthModel } from "../models/mysql/auth.js";
 import loginSchema from "../../middlewares/validateLogin.js"
+import { UserModel } from '../models/mysql/users.js';
 
 export const register = async (req, res) => {
   try {
@@ -76,6 +77,18 @@ export const logOut =  (req, res) => {
   }
 };
 
+export const profile = async (req, res) => {
+  try {
+    const userFound = await AuthModel.protected(req.user.userId)
+    res.status(200).json({
+      message: 'successfully',
+      data: {userFound},
+    });
+  } catch (error) {
+    console.log('👀 👉🏽 ~  errorProfile:', error)
+    
+  }
+}
 
 
 
