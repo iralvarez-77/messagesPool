@@ -35,7 +35,11 @@ export const login = async (req, res) => {
     await loginSchema.validate({ email, password })
 
     const { user, token } = await AuthModel.signIn(email,password)
-    res.cookie("token", token)
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict'
+    })
     res.status(200).json({
       message: 'successfully',
       data: {user},
@@ -61,7 +65,6 @@ export const login = async (req, res) => {
 
 export const logOut =  (req, res) => {
   try {
-    // authController.js
     res.clearCookie('token', {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
