@@ -69,8 +69,7 @@ export class UserModel {
 			return user[0]
 		} catch (error) {
 			console.log('👀 👉🏽 ~  errorGetUSer:', error);
-			if (error.message === '') return res.status(404).json({message: "User not found"});
-			res.status(500).json({message: "Server internal error"})
+			throw error
 		}
 	}
 

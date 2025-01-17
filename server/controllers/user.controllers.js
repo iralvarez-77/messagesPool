@@ -15,8 +15,16 @@ export const getAllUsers = async (req, res) => {
 }
 
 export const getUser = async (req, res) => {
-  const user = await UserModel.getUser(req.params.userId)
-  res.status(user.statusCode).json(user)
+  try {
+    const user = await UserModel.getUser(req.params.userId)
+    res.status(user.statusCode).json(user)
+    
+  } catch (error) {
+    console.log('👀 👉🏽 ~  errorControllerGetUser:', error)
+    if (error.message === '') 
+      return res.status(404).json({message: "User not found"});
+    res.status(500).json({message: "Server internal error"})
+  }
 }
 
 export const updateUser = async (req, res) => {

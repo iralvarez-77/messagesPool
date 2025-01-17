@@ -3,8 +3,6 @@ import instanceDB from '../../services/mysql2/configDev.js'
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
-
-
 export class AuthModel {
   static async signUp(body) {
     try {
@@ -65,10 +63,12 @@ export class AuthModel {
 
   static async protected(userId) {
   try {
+
     const user = await UserModel.getUser(userId)
-    console.log('👀 👉🏽 ~  user:', user)
     const {password: _, ...userWithPass} = user
+
     return userWithPass 
+
   } catch (error) {
     console.log('👀 👉🏽 ~  error:', error)
     }
