@@ -80,9 +80,10 @@ export const logOut =  (req, res) => {
 export const profile = async (req, res) => {
   try {
     const userFound = await AuthModel.protected(req.user.userId)
+  
     res.status(200).json({
       message: 'successfully',
-      data: {userFound},
+      data: userFound,
     });
   } catch (error) {
     console.log('👀 👉🏽 ~  errorProfile:', error)

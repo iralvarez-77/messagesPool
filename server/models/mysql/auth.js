@@ -66,9 +66,10 @@ export class AuthModel {
 
   static async protected(userId) {
   try {
-    const user = await UserModel.getUser(userId)
-    if(!userFond) return res.status(400).json({message: 'user not found'})
-    return user 
+    const {data} = await UserModel.getUser(userId)
+    console.log('👀 👉🏽 ~  user:', data)
+    // if(!userFond) return res.status(400).json({message: 'user not found'})
+    return data 
   } catch (error) {
     console.log('👀 👉🏽 ~  error:', error)
     }
