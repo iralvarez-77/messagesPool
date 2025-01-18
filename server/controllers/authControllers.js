@@ -1,12 +1,7 @@
-import * as Yup from 'yup'
-import userSchema from "../../middlewares/validateUser.js";
 import { AuthModel } from "../models/mysql/auth.js";
-import loginSchema from "../../middlewares/validateLogin.js"
-import { UserModel } from '../models/mysql/users.js';
 
 export const register = async (req, res) => {
   try {
-    await userSchema.validate(req.body)
 
     const { userId, userName, email } = await AuthModel.signUp(req.body);
       res.status(201).json({
@@ -15,13 +10,6 @@ export const register = async (req, res) => {
     });
     
   } catch (error) {
-    if (error instanceof Yup.ValidationError) {
-      return res.status(400).json({
-        message: 'Parámetros inválidos',
-        errors: error.errors,  // Aquí se envían los mensajes personalizados
-      });
-    }
-
     if (error.message === 'DUPLICATE_EMAIL')
       res.status(409).json({ message: 'El correo ya se encuentra registrado' })
     
@@ -33,7 +21,6 @@ export const register = async (req, res) => {
 export const login = async (req, res) => {
   try {
     const { email, password } = req.body
-    await loginSchema.validate({ email, password })
 
     const { user, token } = await AuthModel.signIn(email,password)
     res.cookie("token", token, {
@@ -54,27 +41,16 @@ export const login = async (req, res) => {
 
     if (error.statusCode === 400)
       res.status(400).json(error.message)
-
-    if (error instanceof Yup.ValidationError) {
-      return res.status(400).json({
-        message: 'Parámetros inválidos',
-        errors: error.errors,  // Aquí se envían los mensajes personalizados
-      });
-    }
   }
 }
 
-export const logOut =  (req, res) => {
+export const logOut =  (_req, res) => {
   try {
-    res.clearCookie('token', {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict'
-    })
+    res.clearCookie('token')
     res.status(200).json({ message: 'Logout successful' });
   } catch (error) {
     console.log('👀 👉🏽 ~  errorControllerLogOut:', error)
-  }
+  } 
 };
 
 export const profile = async (req, res) => {

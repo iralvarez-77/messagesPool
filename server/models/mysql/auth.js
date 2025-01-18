@@ -70,7 +70,7 @@ export class AuthModel {
     return userWithPass 
 
   } catch (error) {
-    console.log('👀 👉🏽 ~  error:', error)
+    console.log('👀 👉🏽 ~  errorProtected:', error)
     }
   }
 }
