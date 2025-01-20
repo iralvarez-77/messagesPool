@@ -8,7 +8,6 @@ export class AuthModel {
     try {
 
       const user  = await UserModel.createUser(body)
-      console.log('👀 👉🏽 ~  user:', user)
       return user
       
     } catch (error) {

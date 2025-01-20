@@ -1,19 +1,20 @@
 import { AuthModel } from "../models/mysql/auth.js";
+import { sendErrorResponse } from '../../utils/responseUtils.js'
 
 export const register = async (req, res) => {
   try {
 
-    const { userId, userName, email } = await AuthModel.signUp(req.body);
+    const user = await AuthModel.signUp(req.body);
       res.status(201).json({
       message: 'Usuario creado éxitosamente',
-      data: {userId, userName, email},
+      data: user,
     });
     
   } catch (error) {
     if (error.message === 'DUPLICATE_EMAIL')
-      res.status(409).json({ message: 'El correo ya se encuentra registrado' })
-    
-    res.status(500).json({ message: 'Error interno del servidor' });
+      sendErrorResponse(res, 409, 'Email is already registered')
+
+    sendErrorResponse(res, 500, 'Internal Server Error')
   }
 
 }
@@ -37,10 +38,10 @@ export const login = async (req, res) => {
     console.log('👀 👉🏽 ~  errorLgin:', error)
 
     if (error.statusCode === 404 ) 
-      res.status(404).json(error.message)
+      sendErrorResponse(res, 404, error.message)
 
     if (error.statusCode === 400)
-      res.status(400).json(error.message)
+      sendErrorResponse(res, 400, error.message)
   }
 }
 
