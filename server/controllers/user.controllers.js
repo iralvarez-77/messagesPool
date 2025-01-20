@@ -1,6 +1,7 @@
 import { UserModel } from "../models/mysql/users.js";
 import { UserMessagesModel } from "../models/mysql/usersMessages.js";
 import { stringToNumber } from '../helpers/index.js';
+import { sendErrorResponse } from "../../utils/responseUtils.js";
 
 
 // export const createUser = async (req, res) => {
@@ -9,9 +10,18 @@ import { stringToNumber } from '../helpers/index.js';
 // }
 
 export const getAllUsers = async (req, res) => {
-	const query = stringToNumber(req.query);
-  const users = await UserModel.getAllUsers(query)
-  res.status(users.statusCode).json(users)
+  try {
+    const query = stringToNumber(req.query);
+    const users = await UserModel.getAllUsers(query)
+    res.status(200).json(users)
+    
+  } catch (error) {
+    console.log('👀 👉🏽 ~  errorControllerAllUsers:', error)
+    if (error.message === '')
+      sendErrorResponse(res, 404, [])
+
+    sendErrorResponse(res, 500, 'Internal Server Error')
+  }
 }
 
 export const getUser = async (req, res) => {

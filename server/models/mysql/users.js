@@ -1,6 +1,5 @@
 import instanceDB from '../../services/mysql2/configDev.js';
 import { getOffSet, getTotalPages, responseFn } from '../../helpers/index.js';
-import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 
 export class UserModel {
@@ -41,7 +40,7 @@ export class UserModel {
 
 			const totalPages = getTotalPages(result[0].total, limit);
 
-			const data = {
+			return {
 				users,
 				pagination: {
 					page,
@@ -50,11 +49,11 @@ export class UserModel {
 				},
 			};
 
-			return responseFn(data, 200);
 		} catch (error) {
-			console.log('👀 👉🏽 ~  error:', error);
-			if (error.message === '') return responseFn([], 404);
-			return responseFn(error.message, 500);
+			console.log('👀 👉🏽 ~  errorGetAllUsers:', error);
+			throw error
+			// if (error.message === '') return responseFn([], 404);
+			// return responseFn(error.message, 500);
 		}
 	}
 
