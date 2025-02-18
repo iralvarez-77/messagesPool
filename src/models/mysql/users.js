@@ -59,13 +59,16 @@ export class UserModel {
 
 	static async getUser(userId) {
 		try {
-			const user = await instanceDB.query(
+			const [user] = await instanceDB.query(
 				'SELECT * FROM users WHERE userId = ?;',
 				[userId]
 			);
+
 			if (user.length === 0) throw new Error();
 
-			return user[0]
+			const { password, ...userWithoutPassword } = user;
+
+			return userWithoutPassword
 		} catch (error) {
 			console.log('👀 👉🏽 ~  errorGetUSer:', error);
 			throw error
