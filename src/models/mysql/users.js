@@ -64,7 +64,7 @@ export class UserModel {
 				[userId]
 			);
 
-			if (user.length === 0) throw new Error();
+			if (!user) throw new Error();
 
 			const { password, ...userWithoutPassword } = user;
 
@@ -74,7 +74,22 @@ export class UserModel {
 			throw error
 		}
 	}
+	
+	static async deleteUser(userId) {
+		try {
+			const result = await instanceDB.query(
+				'DELETE FROM users WHERE userId = ?;',
+				[userId]
+			);
+			if (result.affectedRows === 0) throw new Error();
 
+			return responseFn('User deleted', 204);
+		} catch (error) {
+			console.log('👀 👉🏽 ~  error deleteUser:', error);
+			throw error
+		}
+	}
+	
 	// static async updateUser(userId, { userName, alias }) {
 	// 	try {
 	// 		const result = await instanceDB.query(
@@ -98,19 +113,4 @@ export class UserModel {
 	// 	}
 	// }
 
-	static async deleteUser(userId) {
-		try {
-			const result = await instanceDB.query(
-				'DELETE FROM users WHERE userId = ?;',
-				[userId]
-			);
-			if (result.affectedRows === 0) throw new Error();
-
-			return responseFn('User deleted', 204);
-		} catch (error) {
-			console.log('👀 👉🏽 ~  error:', error);
-			if (error.message === '') return responseFn('User not found', 404);
-			return responseFn(error.message, 500);
-		}
-	}
 }

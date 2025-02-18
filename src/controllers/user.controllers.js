@@ -32,7 +32,7 @@ export const getUser = async (req, res) => {
   } catch (error) {
     console.log('👀 👉🏽 ~  errorControllerGetUser:', error)
     if (error.message === '') 
-      sendErrorResponse(res,404, "User not found" )
+      return sendErrorResponse(res, 404, "User not found" )
     sendErrorResponse(res, 500, 'internal Server Error')
   }
 }
@@ -46,8 +46,15 @@ export const updateUser = async (req, res) => {
 }
 
 export const deleteUser  = async (req,res) => {
-  const deletedUser = await UserModel.deleteUser(req.params.userId)
-  res.status(deletedUser.statusCode).json(deletedUser)
+  try{
+    const deletedUser = await UserModel.deleteUser(req.params.userId)
+    res.status(deletedUser.statusCode).json(deletedUser)
+
+  } catch (error) {
+    console.log('👀 👉🏽 ~  errorDeleteUser:', error)
+    if (error.message === '') return sendErrorResponse(res, 404, 'User not found');
+			sendErrorResponse(res, 500, 'Internal server Error')
+  }
 }
 
 export const createRelation = async (req, res) => {
