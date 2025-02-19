@@ -6,11 +6,13 @@ import v1AuthRoute from './routes/authRoutes.js'
 import instanceDB from './services/mysql2/configDev.js';
 import cookieParser from 'cookie-parser'
 import { authRequired } from '../middlewares/validateToken.js';
+import cors from 'cors'
 // import cron from './helpers/cron.js'
 
 const app = express();
 app.disable('x-powered-by');
 
+app.use(cors())
 app.use(express.json());
 app.use (cookieParser())
 app.use('/api/v1/messages', authRequired, v1messageRoute);
