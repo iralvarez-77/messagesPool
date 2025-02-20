@@ -1,10 +1,14 @@
 import {useForm} from "react-hook-form"
+import { useContext } from "react"
+import AuthContext from "../context/AuthContext"
 
 function RegisterPage () {
   const {register, handleSubmit} = useForm()
 
+  const {signUp} = useContext(AuthContext)
+
   const onsubmit = handleSubmit(async(values) => { 
-    
+    signUp(values)
   })
   return (
     <div className="bg-zinc-800 max-w-md p-10 rounded-md">
