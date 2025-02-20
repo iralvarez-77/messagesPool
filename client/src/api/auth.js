@@ -9,7 +9,20 @@ export const registerRequest = async (user) => {
     });
     return response.data 
   } catch (error) {
-    console.log('👀 👉🏽 ~  error:', error)
+    console.log('👀 👉🏽 ~  errorRegisterRequest:', error)
     throw error
   }
 };
+
+export const loginRequest = async (user) => {
+  try {
+    const response = await axios.post(`${API}/login`,user, {
+      headers: {'Content-Type': 'application/json'}
+    })
+
+    console.log('👀 👉🏽 ~  response:', response.data)
+    return response.data
+  } catch (error) {
+    console.log('👀 👉🏽 ~  errorLoginRequest:', error)
+  }
+}

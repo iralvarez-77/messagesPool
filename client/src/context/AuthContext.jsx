@@ -1,15 +1,8 @@
 import { createContext, useState } from "react";
-import { registerRequest } from "../api/auth"
-import PropTypes from 'prop-types';
-
+import { registerRequest, loginRequest } from "../api/auth"
+import PropTypes from 'prop-types'
 
 const AuthContext = createContext()
-
-// export const useAuth = () => {
-//   const context = useContext(AuthContext)
-//   console.log('👀 👉🏽 ~  context:', context)
-//   return context
-// }
 
 export const AuthProvider = ({children}) => {
   const [user, setUser] = useState(null)
@@ -25,9 +18,20 @@ export const AuthProvider = ({children}) => {
     }
   }
 
+  const signIn = async (user) => {
+    try {
+      const res = await loginRequest(user)
+      console.log('👀 👉🏽 ~  res:', res)
+      return res
+    } catch (error) {
+      console.log('👀 👉🏽 ~  error:', error)
+      
+    }
+  }
   return (
     <AuthContext.Provider value = {{
       signUp,
+      signIn,
       user
     }}>
       {children}
