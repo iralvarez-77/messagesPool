@@ -6,6 +6,7 @@ const AuthContext = createContext()
 
 export const AuthProvider = ({children}) => {
   const [user, setUser] = useState(null)
+  const [errors, setErrors] = useState(null)
 
   const signUp = async (user) => {
     try {
@@ -13,7 +14,8 @@ export const AuthProvider = ({children}) => {
       console.log('👀 👉🏽 ~  res.data:', res.data);
       setUser(res.data)
     } catch (error) {
-      console.log('👀 👉🏽 ~  erroSignUp:', error)
+      console.log('👀 👉🏽 ~  erroSignUp:', error.response.data.message)
+      setErrors(error.response.data.message)
       
     }
   }
@@ -32,7 +34,8 @@ export const AuthProvider = ({children}) => {
     <AuthContext.Provider value = {{
       signUp,
       signIn,
-      user
+      user,
+      errors
     }}>
       {children}
     </AuthContext.Provider>

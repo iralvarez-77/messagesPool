@@ -6,6 +6,7 @@ export const authRequired = (req, res, next) => {
     if (!token) throw new Error('No token provided')
 
     const decoded = jwt.verify(token, process.env.PRIVATE_KEY)
+    console.log('👀 👉🏽 ~  decoded:', decoded)
     req.user = decoded;
     next()
 
