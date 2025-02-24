@@ -16,13 +16,16 @@ export const AuthProvider = ({children}) => {
       setIsAuthenticated(true)
     } catch (error) {
       console.log('👀 👉🏽 ~  errorSignUp:', error.response.data)
-      if (Array.isArray(error.response.data)) {
-        setErrors(error.response.data)
+      //arreglar, no funciona
+      if (Array.isArray(error.response.data.errors)) {
+        setErrors(error.response.data.errors)
       }
+      
       setErrors([error.response.data.message])
+      
     }
   }
-
+  
   const signIn = async (user) => {
     try {
       const res = await loginRequest(user)
