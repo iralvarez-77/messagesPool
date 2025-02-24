@@ -1,19 +1,26 @@
 import {useForm} from "react-hook-form"
-import { useContext } from "react"
+import { useContext, useEffect } from "react"
 import AuthContext from "../context/AuthContext"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
 function RegisterPage () {
   const {register, handleSubmit, formState: {errors}} = useForm()
 
-  const {signUp, errors: registerErrors} = useContext(AuthContext)
+  const {signUp, errors: registerErrors, isAuthenticated} = useContext(AuthContext)
+  const navigate = useNavigate()
+
+  useEffect(()=> {
+    if (isAuthenticated) navigate("/users")
+  }, [isAuthenticated, navigate])
 
   const onSubmit = handleSubmit(async(values) => { 
     signUp(values)
   })
   return (
     <div className="bg-zinc-800 max-w-md p-10 rounded-md">
-      {registerErrors && <p className="text-red-500">{registerErrors}</p>}
+      {registerErrors.map((error, i) => (
+        <p className="text-red-500" key={i}>{error}</p>
+      ))}
       <form 
         onSubmit={onSubmit}>
         <input type="text" {...register("userName", {required:true})} className="w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-2" placeholder="userName" />

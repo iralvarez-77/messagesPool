@@ -6,17 +6,20 @@ const AuthContext = createContext()
 
 export const AuthProvider = ({children}) => {
   const [user, setUser] = useState(null)
-  const [errors, setErrors] = useState(null)
-
+  const [errors, setErrors] = useState([])
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  
   const signUp = async (user) => {
     try {
       const res = await registerRequest(user);
-      console.log('👀 👉🏽 ~  res.data:', res.data);
       setUser(res.data)
+      setIsAuthenticated(true)
     } catch (error) {
-      console.log('👀 👉🏽 ~  erroSignUp:', error.response.data.message)
-      setErrors(error.response.data.message)
-      
+      console.log('👀 👉🏽 ~  errorSignUp:', error.response.data)
+      if (Array.isArray(error.response.data)) {
+        setErrors(error.response.data)
+      }
+      setErrors([error.response.data.message])
     }
   }
 
@@ -34,6 +37,7 @@ export const AuthProvider = ({children}) => {
     <AuthContext.Provider value = {{
       signUp,
       signIn,
+      isAuthenticated,
       user,
       errors
     }}>
