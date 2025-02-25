@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 import { registerRequest, loginRequest } from "../api/auth"
 import PropTypes from 'prop-types'
 
@@ -36,6 +36,16 @@ export const AuthProvider = ({children}) => {
       
     }
   }
+
+  //script para eliminar los errores automáticamente
+  useEffect(()=> {
+    if(errors.length > 0 ){
+      setTimeout(()=> {
+        setErrors([])
+      }, 5000)
+    }
+  }, [errors])
+
   return (
     <AuthContext.Provider value = {{
       signUp,
