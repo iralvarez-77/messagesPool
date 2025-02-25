@@ -5,6 +5,7 @@ import LoginPage from "./pages/LoginPage"
 import HomePage from "./pages/HomePage"
 import UserPage from "./pages/UserPage"
 import UsersPage from "./pages/UsersPage"
+import ProfilePage from "./pages/ProfilePage"
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="/register" element={<RegisterPage/>} />
           <Route path="/users/:id" element={<UserPage/>} />
           <Route path="/users" element={<UsersPage/>} />
+          <Route path="/profile" element={<ProfilePage/>} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>
