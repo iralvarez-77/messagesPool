@@ -6,6 +6,7 @@ import HomePage from "./pages/HomePage"
 import UserPage from "./pages/UserPage"
 import UsersPage from "./pages/UsersPage"
 import ProfilePage from "./pages/ProfilePage"
+import ProtectedRoute from "./ProtectedRoute"
 
 function App() {
   return (
@@ -15,9 +16,12 @@ function App() {
           <Route path="/" element={<HomePage/>} />
           <Route path="/login" element={<LoginPage/>} />
           <Route path="/register" element={<RegisterPage/>} />
-          <Route path="/users/:id" element={<UserPage/>} />
-          <Route path="/users" element={<UsersPage/>} />
-          <Route path="/profile" element={<ProfilePage/>} />
+
+          <Route element={<ProtectedRoute/>} >
+            <Route path="/users/:id" element={<UserPage/>} />
+            <Route path="/users" element={<UsersPage/>} />
+            <Route path="/profile" element={<ProfilePage/>} />
+          </Route>  
         </Routes>
       </BrowserRouter>
     </AuthProvider>

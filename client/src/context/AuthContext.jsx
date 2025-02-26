@@ -29,6 +29,8 @@ export const AuthProvider = ({children}) => {
   const signIn = async (user) => {
     try {
       const res = await loginRequest(user)
+      setIsAuthenticated(true)
+
       console.log('👀 👉🏽 ~  res:', res)
       return res
     } catch (error) {
@@ -45,6 +47,10 @@ export const AuthProvider = ({children}) => {
       }, 5000)
     }
   }, [errors])
+
+  useEffect(()=> {
+
+  }, [])
 
   return (
     <AuthContext.Provider value = {{
