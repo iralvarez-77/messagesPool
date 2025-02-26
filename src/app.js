@@ -20,6 +20,7 @@ const corsOptions = {
 }
 
 app.use(cors(corsOptions))
+//app.options("*", cors(corsOptions))
 app.use(express.json());
 app.use (cookieParser())
 app.use('/api/v1/messages', authRequired, v1messageRoute);
