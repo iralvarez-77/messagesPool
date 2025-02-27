@@ -30,8 +30,9 @@ export const AuthProvider = ({children}) => {
     try {
       const res = await loginRequest(user)
       setIsAuthenticated(true)
+      setUser(res.data)
 
-      console.log('👀 👉🏽 ~  res:', res)
+      console.log('👀 👉🏽 ~  res.data:', res.data)
       return res
     } catch (error) {
       console.log('👀 👉🏽 ~  error:', error)
@@ -48,9 +49,14 @@ export const AuthProvider = ({children}) => {
     }
   }, [errors])
 
-  useEffect(()=> {
+//   useEffect(() => {
+//     const token = localStorage.getItem("token");
+//     if (token) {
+//         setIsAuthenticated(true);
+//         // Opcionalmente, podrías hacer una solicitud para obtener los datos del usuario
+//     }
+// }, []);
 
-  }, [])
 
   return (
     <AuthContext.Provider value = {{

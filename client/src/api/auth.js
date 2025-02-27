@@ -16,8 +16,9 @@ export const registerRequest = async (user) => {
 
 export const loginRequest = async (user) => {
   try {
-    const response = await axios.post(`${API}/login`,user, {
-      headers: {'Content-Type': 'application/json'}
+    const response = await axios.post(`${API}/login`, user, {
+      headers: {'Content-Type': 'application/json'},
+      withCredentials: true
     })
 
     console.log('👀 👉🏽 ~  response:', response.data)
