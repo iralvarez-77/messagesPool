@@ -1,13 +1,13 @@
-import { useContext } from "react"
 import {useForm} from "react-hook-form"
-import AuthContext from "../context/AuthContext"
 import { Link } from "react-router-dom"
+import { useAuth } from "../helpers/authHelpers"
 
 
 function LoginPage () {
 
   const {register, handleSubmit,formState: {errors}} = useForm()
-  const {signIn} = useContext(AuthContext)
+  const {signIn} = useAuth()
+
 
   const onSubmit = handleSubmit((data) => {
     signIn(data)

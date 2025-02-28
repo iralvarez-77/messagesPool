@@ -1,8 +1,7 @@
-import { createContext, useState, useEffect } from "react";
+import { useState, useEffect} from "react";
 import { registerRequest, loginRequest } from "../api/auth"
 import PropTypes from 'prop-types'
-
-const AuthContext = createContext()
+import {AuthContext} from "../helpers/authHelpers.js"
 
 export const AuthProvider = ({children}) => {
   const [user, setUser] = useState(null)
@@ -75,4 +74,4 @@ AuthProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-export default AuthContext
+
