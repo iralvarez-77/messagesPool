@@ -68,6 +68,14 @@ export const profile = async (req, res) => {
   }
 }
 
+export const authMe = (req, res) => {
+  
+    if (req.user) return res.json({ isAuthenticated: true, user: req.user });
+    
+    return res.json({ isAuthenticated: false });
+  
+}
+
 
 
 
