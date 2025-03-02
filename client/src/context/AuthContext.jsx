@@ -25,13 +25,14 @@ export const AuthProvider = ({children}) => {
     };
     checkVerify();
   }, []);
-  
-  //pasar estas funciones a otro archivo
+
   const signUp = async (user) => {
     try {
       const res = await registerRequest(user);
       setUser(res.data)
       setIsAuthenticated(true)
+      console.log('👀 👉🏽 ~  res:', res)
+      return res
     } catch (error) {
       console.log('👀 👉🏽 ~  errorSignUp:', error.response.data)
       //arreglar, no funciona
@@ -46,12 +47,13 @@ export const AuthProvider = ({children}) => {
   
   const signIn = async (user) => {
     try {
-      await loginRequest(user)
-      const res = await verify();
+      const res = await loginRequest(user)
       console.log('👀 👉🏽 ~  res:', res)
-      setUser(res.data.user)
-      setIsAuthenticated(res.data.isAuthenticated)
-      return res.data
+      // const res = await verify();
+      // console.log('👀 👉🏽 ~  res:', res)
+      // setUser(res.data.user)
+      // setIsAuthenticated(res.data.isAuthenticated)
+      return res
     } catch (error) {
       console.log('👀 👉🏽 ~  error:', error)
       

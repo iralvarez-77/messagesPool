@@ -1,5 +1,5 @@
 import {useForm} from "react-hook-form"
-import { Link,  } from "react-router-dom"
+import { Link } from "react-router-dom"
 import { useAuth } from "../helpers/authHelpers"
 
 
@@ -34,7 +34,7 @@ function LoginPage () {
             Login
           </button>
         </form>
-      <p className="flex gap-x-2 justify-between">Don´t have an account? <Link className="text-sky-500" to="/register">Sign Up </Link></p>
+      <p className="flex gap-x-2 justify-between">Don´t have an account? <Link className="text-sky-500" to="/">Sign Up </Link></p>
       </div>
     </div>
   )

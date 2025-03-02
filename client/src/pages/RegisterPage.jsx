@@ -1,12 +1,12 @@
 import {useForm} from "react-hook-form"
-import {useEffect } from "react"
-import { Link, useNavigate } from "react-router-dom"
+import { Link, useNavigate} from "react-router-dom"
 import { useAuth } from "../helpers/authHelpers"
+import { useEffect } from "react"
 
 function RegisterPage () {
   const {register, handleSubmit, formState: {errors}} = useForm()
 
-  const {signUp, errors: registerErrors, isAuthenticated} = useAuth()
+  const {signUp, errors: registerErrors, isAuthenticated } = useAuth()
   const navigate = useNavigate()
 
   useEffect(()=> {
@@ -14,7 +14,7 @@ function RegisterPage () {
   }, [isAuthenticated, navigate])
 
   const onSubmit = handleSubmit(async(values) => { 
-    signUp(values)
+    await signUp(values)
   })
   return (
     <div className="bg-zinc-800 max-w-md p-10 rounded-md">
