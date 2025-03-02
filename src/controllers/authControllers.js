@@ -25,7 +25,7 @@ export const login = async (req, res) => {
     const { email, password } = req.body
 
     const { user, token } = await AuthModel.signIn(email,password)
-    res.cookie("token", token, {
+    res.cookie("AccessToken", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'strict'
@@ -48,7 +48,7 @@ export const login = async (req, res) => {
 
 export const logOut =  (_req, res) => {
   try {
-    res.clearCookie('token')
+    res.clearCookie('AccessToken')
     res.status(200).json({ message: 'Logout successful' });
   } catch (error) {
     console.log('👀 👉🏽 ~  errorControllerLogOut:', error)
@@ -71,7 +71,7 @@ export const profile = async (req, res) => {
 
 export const authMe = (req, res) => {
 
-  const token = req.cookies.token
+  const token = req.cookies.AccessToken
   if (!token) return res.status(401).json({ isAuthenticated: false })
     try {
       const decoded = jwt.verify(token, process.env.PRIVATE_KEY)
