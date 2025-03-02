@@ -10,7 +10,7 @@ router.post('/register',validateSchemas(registerSchema), register)
 router.post('/login', validateSchemas(loginSchema), login)
 router.post('/logout', logOut)
 router.get('/profile', authRequired, profile)
-router.get('/auth', authMe);
+router.get('/verify', authMe);
 
 
 export default router 

@@ -1,5 +1,6 @@
 import { AuthModel } from "../models/mysql/auth.js";
 import { sendErrorResponse } from '../../utils/responseUtils.js'
+import jwt from "jsonwebtoken"
 
 export const register = async (req, res) => {
   try {
@@ -69,11 +70,16 @@ export const profile = async (req, res) => {
 }
 
 export const authMe = (req, res) => {
-  
-    if (req.user) return res.json({ isAuthenticated: true, user: req.user });
-    
-    return res.json({ isAuthenticated: false });
-  
+
+  const token = req.cookies.token
+  if (!token) return res.status(401).json({ isAuthenticated: false })
+    try {
+      const decoded = jwt.verify(token, process.env.PRIVATE_KEY)
+      res.json({ isAuthenticated: true, user: decoded });
+    } catch (error) {
+      console.log('👀 👉🏽 ~  errorAuthMe:', error)
+      
+    }
 }
 
 
