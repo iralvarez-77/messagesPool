@@ -11,7 +11,6 @@ export const registerRequest = async (user) => {
     return response.data 
   } catch (error) {
     console.log('👀 👉🏽 ~  errorRegisterRequest:', error)
-    throw error
   }
 };
 
@@ -25,5 +24,16 @@ export const loginRequest = async (user) => {
     return response.data
   } catch (error) {
     console.log('👀 👉🏽 ~  errorLoginRequest:', error)
+  }
+}
+
+export const verify = async () => {
+  try {
+    const response = await axios.get(`${API}/verify`, {withCredentials: true})
+    console.log('👀 👉🏽 ~  response:', response)
+    return response 
+  } catch(error) {
+    console.log('👀 👉🏽 ~  error:verify', error)
+    
   }
 }

@@ -1,8 +1,7 @@
 import { useState, useEffect} from "react";
-import { registerRequest, loginRequest } from "../api/auth"
+import { registerRequest, loginRequest, verify } from "../api/auth"
 import PropTypes from 'prop-types'
 import {AuthContext} from "../helpers/authHelpers.js"
-import axios from "axios"
 
 export const AuthProvider = ({children}) => {
   const [user, setUser] = useState(null)
@@ -13,8 +12,7 @@ export const AuthProvider = ({children}) => {
   useEffect(() => {
     const checkVerify = async () => {
       try {
-        //cambiar a la carpeta api e importar 
-        const res = await axios.get("http://localhost:4000/api/v1/verify", { withCredentials: true });
+        const res = await verify()
         setUser(res.data.user)
         setIsAuthenticated(res.data.isAuthenticated);
       } catch (error) {
@@ -49,10 +47,10 @@ export const AuthProvider = ({children}) => {
   const signIn = async (user) => {
     try {
       await loginRequest(user)
-      const res = await axios.get("http://localhost:4000/api/v1/verify", { withCredentials: true });
+      const res = await verify();
+      console.log('👀 👉🏽 ~  res:', res)
       setUser(res.data.user)
-      setIsAuthenticated(true)
-      
+      setIsAuthenticated(res.data.isAuthenticated)
       return res.data
     } catch (error) {
       console.log('👀 👉🏽 ~  error:', error)
