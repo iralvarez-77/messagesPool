@@ -1,5 +1,5 @@
 import {useForm} from "react-hook-form"
-import { Link } from "react-router-dom"
+import { Link,  } from "react-router-dom"
 import { useAuth } from "../helpers/authHelpers"
 
 
@@ -7,10 +7,15 @@ function LoginPage () {
 
   const {register, handleSubmit,formState: {errors}} = useForm()
   const {signIn} = useAuth()
+  // const navigate = useNavigate();
 
 
-  const onSubmit = handleSubmit((data) => {
-    signIn(data)
+  const onSubmit = handleSubmit(async (data) => {
+    await signIn(data)
+    // if (success) {
+    //   console.log('👀 👉🏽 ~  success:', success)
+    //   // navigate("/users"); // Redirige después de iniciar sesión
+    // }
   })
   return(
     <div className="flex items-center justify-center h-screen">

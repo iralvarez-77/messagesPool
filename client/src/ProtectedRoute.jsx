@@ -3,10 +3,12 @@ import { useAuth } from "./helpers/authHelpers"
 
 
 function ProtectedRoute(){
-  const {isAuthenticated } = useAuth()
-  console.log('👀 👉🏽 ~  isAuthenticated:', isAuthenticated)
+  const { isAuthenticated, loading } = useAuth();
 
-  return isAuthenticated ? <Outlet /> : <Navigate to="/login" />
+  if (loading) return <p>Cargando...</p>;
+  if (!isAuthenticated) return <Navigate to="/login" replace />;
+
+  return <Outlet />;
 } 
 
 export default ProtectedRoute

@@ -22,7 +22,6 @@ export const loginRequest = async (user) => {
       withCredentials: true
     })
 
-    console.log('👀 👉🏽 ~  response:', response.data)
     return response.data
   } catch (error) {
     console.log('👀 👉🏽 ~  errorLoginRequest:', error)
