@@ -30,7 +30,7 @@ function LoginPage () {
           <input type="password" {...register("password", {required: true})} className="w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-2" placeholder="password" />
           {errors.password && <p className="text-red-500">Password is required</p>}
 
-          <button type="submit" className="my-2 rounded-md bg-zinc-700 p-2">
+          <button type="submit" className="my-2 rounded-md bg-indigo-700 p-2">
             Login
           </button>
         </form>
