@@ -1,6 +1,5 @@
 import {useForm} from "react-hook-form"
 import { useMessage } from "../helpers/authHelpers"
-import { createMessageRequest } from "../api/message"
 
 function MessageFormPage() {
 
