@@ -1,11 +1,15 @@
 import {useForm} from "react-hook-form"
+import { useMessage } from "../helpers/authHelpers"
+import { createMessageRequest } from "../api/message"
 
 function MessageFormPage() {
 
   const {register, handleSubmit} = useForm()
+  const {createMessage} = useMessage()
 
-  const onSubmit = handleSubmit((data)=> {
-    console.log('👀 👉🏽 ~  data:', data)
+  const onSubmit = handleSubmit( async (content)=> {
+    const result = await createMessage(content)
+    console.log('👀 👉🏽 ~  result:', result)
   })
   return (
     <div className="bg-zinc-800 max-w-md w-full p-10 rounded-md">
