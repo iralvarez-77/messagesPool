@@ -1,13 +1,9 @@
-import axios from 'axios';
+import apiClient from '../api/axios';
 
-const API = 'http://localhost:4000/api/v1';
 
 export const registerRequest = async (user) => {
   try {
-    const response = await axios.post(`${API}/register`, user, {
-      headers: { 'Content-Type': 'application/json' },
-      withCredentials: true
-    });
+    const response = await apiClient.post(`/register`, user);
     return response.data 
   } catch (error) {
     console.log('👀 👉🏽 ~  errorRegisterRequest:', error)
@@ -16,11 +12,7 @@ export const registerRequest = async (user) => {
 
 export const loginRequest = async (user) => {
   try {
-    const response = await axios.post(`${API}/login`, user, {
-      headers: {'Content-Type': 'application/json'},
-      withCredentials: true
-    })
-
+    const response = await apiClient.post(`/login`, user)
     return response.data
   } catch (error) {
     console.log('👀 👉🏽 ~  errorLoginRequest:', error)
@@ -29,7 +21,7 @@ export const loginRequest = async (user) => {
 
 export const verify = async () => {
   try {
-    const response = await axios.get(`${API}/verify`, {withCredentials: true})
+    const response = await apiClient.get(`verify`)
     console.log('👀 👉🏽 ~  response:', response)
     return response 
   } catch(error) {
