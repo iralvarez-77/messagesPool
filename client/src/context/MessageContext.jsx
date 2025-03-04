@@ -6,9 +6,8 @@ import { createMessageRequest } from "../api/message"
 function MessageProvider({children}) {
   
   const createMessage = async (content) => {
-  const result = await createMessageRequest(content)
-  console.log('👀 👉🏽 ~  result:', result)
-
+    const message = await createMessageRequest(content)
+    return message.data
   }
   return (
     <MessageContext.Provider value={
