@@ -9,10 +9,21 @@ function MessageProvider({children}) {
     const message = await createMessageRequest(content)
     return message.data
   }
+
+  const getMessage =  (messageId) => {
+    console.log('👀 👉🏽 ~  messageId:', messageId)
+  }
+  const getMessages =  () => {
+    console.log('👀 👉🏽 ~  messageId:')
+  }
+
+
   return (
     <MessageContext.Provider value={
       {
-        createMessage
+        createMessage,
+        getMessage,
+        getMessages
       }}>
       {children}
     </MessageContext.Provider>

@@ -3,9 +3,14 @@ import { CategoriesMessagesModel } from '../models/mysql/categoriesMessages.js';
 import { stringToNumber } from '../helpers/index.js';
 
 export const getAllMessages = async (req, res) => {
-	const query = stringToNumber(req.query);
-	const messages = await MessageModel.getAllMessages(query);
-	res.status(messages.statusCode).json(messages);
+	try {
+		const query = stringToNumber(req.query);
+		const messages = await MessageModel.getAllMessages(query);
+		res.status(200).json(messages);
+	} catch (error) {
+		console.log('👀 👉🏽 ~  errorgetAllMessages:', error)
+		
+	}
 };
 
 export const getMessageById = async (req, res) => {
