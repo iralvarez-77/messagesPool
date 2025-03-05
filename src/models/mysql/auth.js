@@ -20,7 +20,7 @@ export class AuthModel {
     try {
 
       const userFound = await instanceDB.query(
-        'SELECT * FROM users  WHERE email = ? LIMIT 1;',
+        'SELECT * FROM users  WHERE email = ?;',
 				[email]
       );
       if (userFound.length === 0) {
@@ -33,7 +33,7 @@ export class AuthModel {
 
       if (!isMatch) { 
         const error = new Error("invalid credentials")
-        error.statusCode = 400
+        error.statusCode = 401
         throw error
       }
       const token = await jwt.sign({userId: userFound[0].userId }, process.env.PRIVATE_KEY, {expiresIn: '1h'});
