@@ -1,9 +1,10 @@
 import { useEffect } from "react"
-import { useMessage } from "../helpers/authHelpers"
+import { useMessage } from "../helpers/messagesHelpers"
 
 
 function UsersPage() {
   const { getMessages }= useMessage()
+
 
   useEffect(()=>{
     getMessages()
