@@ -22,7 +22,6 @@ export const loginRequest = async (user) => {
 export const verify = async () => {
   try {
     const response = await apiClient.get(`verify`)
-    console.log('👀 👉🏽 ~  response:', response)
     return response 
   } catch(error) {
     console.log('👀 👉🏽 ~  error:verify', error)
