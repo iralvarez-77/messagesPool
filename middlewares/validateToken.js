@@ -3,11 +3,9 @@ import jwt from 'jsonwebtoken'
 export const authRequired = (req, res, next) => {
   try {
     const {AccessToken} = req.cookies
-    console.log('👀 👉🏽 ~  AccessToken:', AccessToken)
     if (!AccessToken) throw new Error('No AccessToken provided')
 
     const decoded = jwt.verify(AccessToken, process.env.PRIVATE_KEY)
-    console.log('👀 👉🏽 ~  decoded:', decoded)
     req.user = decoded;
     next()
 

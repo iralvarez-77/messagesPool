@@ -1,10 +1,9 @@
-import { MessageContext } from "../helpers/authHelpers"
+import { MessageContext } from "../helpers/messagesHelpers"
 import PropTypes from 'prop-types'
-import { createMessageRequest, getMessagesRequest } from "../api/message"
+import { createMessageRequest, getallMessagesRequest } from "../api/message"
 
 
 function MessageProvider({children}) {
-  
   const createMessage = async (content) => {
     const message = await createMessageRequest(content)
     return message.data
@@ -13,9 +12,16 @@ function MessageProvider({children}) {
   const getMessage =  (messageId) => {
     console.log('👀 👉🏽 ~  messageId:', messageId)
   }
-  const getMessages = async () => {
-    const result = await getMessagesRequest()
-    console.log('👀 👉🏽 ~  result:', result)
+  
+  const getMessages = async (nunPage, pageSize) => {
+    try {
+      const result = await getallMessagesRequest(nunPage, pageSize);
+      console.log('👀 👉🏽 ~  result:', result)
+    } catch (err) {
+      console.log('👀 👉🏽 ~  err:', err)
+      
+    }
+    
   }
 
 
@@ -24,7 +30,7 @@ function MessageProvider({children}) {
       {
         createMessage,
         getMessage,
-        getMessages
+        getMessages,
       }}>
       {children}
     </MessageContext.Provider>

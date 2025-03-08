@@ -3,7 +3,7 @@ import { AuthProvider } from "./context/AuthContext"
 import RegisterPage from "./pages/RegisterPage"
 import LoginPage from "./pages/LoginPage"
 import UserPage from "./pages/UserPage"
-import UsersPage from "./pages/UsersPage"
+import MessagesPage from "./pages/MessagesPage"
 import MessageFormPage from "./pages/MessageFormPage"
 import ProtectedRoute from "./ProtectedRoute"
 import MessageProvider from "./context/MessageContext"
@@ -19,7 +19,7 @@ function App() {
 
             <Route element={<ProtectedRoute/>} >
               <Route path="/users/:id" element={<UserPage/>} />
-              <Route path="/users" element={<UsersPage/>} />
+              <Route path="/users" element={<MessagesPage/>} />
               <Route path="/messages" element={<MessageFormPage/>} />
             </Route>  
           </Routes>

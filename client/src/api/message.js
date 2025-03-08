@@ -13,7 +13,7 @@ export const createMessageRequest = async (content) => {
 
 export const getMessageRequest = async (messageId) => {
   try {
-    const response = await apiClient.get(`/message/${messageId}`)
+    const response = await apiClient.get(`/messages/${messageId}`)
     console.log('👀 👉🏽 ~  response:', response)
     
   } catch (error) {
@@ -21,15 +21,16 @@ export const getMessageRequest = async (messageId) => {
     
   }
 }
-export const getMessagesRequest = async (numPage = 1, pageSize = 10) => {
+
+export const getallMessagesRequest = async (nunPage = 1, pageSize = 10) => {
   try {
-    const response = await apiClient.get(`/message`, {
-      params: {numPage, pageSize}
+    const response = await apiClient.get(`/messages`, {
+      params: {nunPage, pageSize}
     })
     console.log('👀 👉🏽 ~  response.data:', response.data)
     return response.data
   } catch (error) {
-    console.log('👀 👉🏽 ~  errorgetMessagesRequest:', error)
+    console.log('👀 👉🏽 ~  ErrorGetallUserRequest:', error)
     
   }
 }

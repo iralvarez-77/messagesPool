@@ -29,13 +29,15 @@ export class MessageModel {
 				},
 			};
 
-			return responseFn(data, 200);
+			return data;
 		} catch (error) {
 			console.log('👀 👉🏽 ~  error:', error);
 			if (error.message === '') return responseFn([], 404);
 			return responseFn(error.message, 500);
 		}
 	}
+
+
 
 	static async getMessageByID(messageId) {
 		try {
