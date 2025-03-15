@@ -7,14 +7,16 @@ import MessagesPage from "./pages/MessagesPage"
 import MessageFormPage from "./pages/MessageFormPage"
 import ProtectedRoute from "./ProtectedRoute"
 import MessageProvider from "./context/MessageContext"
+import Navbar from "./components/Navbar"
 
 function App() {
   return (
     <AuthProvider>
       <MessageProvider>
         <BrowserRouter>
+          <Navbar />
           <Routes>
-            <Route path="/" element={<RegisterPage/>} />
+            <Route path="/register" element={<RegisterPage/>} />
             <Route path="/login" element={<LoginPage/>} />
 
             <Route element={<ProtectedRoute/>} >
